@@ -6,7 +6,7 @@ import {BiUpvote} from 'react-icons/bi';
 import {BiDownvote} from 'react-icons/bi';
 import {BiCommentDetail} from 'react-icons/bi';
 import { FaShareSquare } from 'react-icons/fa';
-import UserAvatar from '@/assets/UserAvatar.webp'
+import UserAvatar from '@/assets/userAvatar.webp'
 import {BsFire} from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {BsPatchCheckFill} from 'react-icons/bs';
