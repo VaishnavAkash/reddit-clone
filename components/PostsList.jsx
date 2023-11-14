@@ -67,8 +67,8 @@ const NormalPosts = ({posts,channels}) => {
             <div className='cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 '>
               <div onClick={()=>setGenreModal(prev=>!prev)} className='flex items-center relative px-4 py-[0.34rem] rounded-full gap-2 hover:bg-gray-300'>Hot <BsChevronDown/></div>
               {genreModal && <div className='absolute right-[6.6rem] flex flex-col top-8 w-fit h-fit py-2 px-2 rounded-lg bg-white shadow-lg border-[1px] border-gray-200'>
-                {genreArray.map(eItem=>{
-                return <span className='hover:bg-gray-100 px-6 py-2'>{eItem}</span>
+                {genreArray.map((eItem,idx)=>{
+                return <span key={idx} className='hover:bg-gray-100 px-6 py-2'>{eItem}</span>
                 })}
               </div>}
             <div onClick={handleViewMode} className="cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 hover:bg-gray-300">
