@@ -17,12 +17,17 @@ import {AiOutlinePlus} from 'react-icons/ai';
 import {CiBullhorn} from 'react-icons/ci';
 import {GiPunchBlast} from 'react-icons/gi';
 import { useSelector,useDispatch } from 'react-redux';
+import Link from 'next/link';
+import { loginUser } from '@/slices/homeSlice';
 
 const Navbar = () => {
-const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
+  const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
+
+  console.log(userLoggedIn);
+
 const lightMode= useSelector(store=>store.homeSlice.lightMode);
 
-  return !userLoggedIn ? <LoggedInNavbar/> : <RegularNavbar/>
+  return userLoggedIn ? <LoggedInNavbar/> : <RegularNavbar/>
 }
 
 const LoggedInNavbar = () =>{
@@ -30,7 +35,7 @@ const LoggedInNavbar = () =>{
  return (
   <div className='laptop:flex items-center text-sm justify-between w-full gap-4 px-8 py-[2px] fixed border-b-2 border-gray top-0 bg-white z-[100]'>
     <div className='laptop:flex w-[25%] items-center gap-4'>
-         <Image className='cursor-pointer' src={Logo} width={110} height={10} alt='reddit-logo'/>
+        <Link href='/'><Image className='cursor-pointer' src={Logo} width={110} height={10} alt='reddit-logo'/></Link>
         <div className='laptop:cursor-pointer flex justify-between w-full px-4 py-2 hover:bg-gray-50'>
           <div className='laptop:flex items-center gap-2'>
           <AiFillHome className='text-2xl'/>
@@ -73,13 +78,21 @@ const LoggedInNavbar = () =>{
 }
 
 const RegularNavbar = () =>{
+  const dispatch = useDispatch();
+  const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
+
+  function handleLogin(){
+    console.log('first')
+    dispatch(loginUser());
+  }
   
+
   return (
-    <div className='laptop:flex justify-between items-center px-4 py-4 border-b-[1px] border-gray-400'>
+    <div className='laptop:flex items-center text-sm justify-between w-full gap-4 px-8 py-3 fixed border-b-2 border-gray top-0 bg-white z-[100]'>
       <div className='laptop:w-[10rem]'>
       <Image className='cursor-pointer' src={Logo} width={110} height={10} alt='reddit-logo'/>
       </div>
-      <div className='laptop:flex items-center w-[50rem] py-2 px-4 bg-gray-200 rounded-full gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400 '>
+      <div className='laptop:flex items-center w-[50rem] py-2 px-4 bg-white rounded-full gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400 '>
         <GoSearch/>
         <input className='laptop:w-full bg-transparent outline-none' placeholder='Search Reddit'/>
       </div>
@@ -88,7 +101,7 @@ const RegularNavbar = () =>{
             <BsQrCodeScan/>
             Get App
           </div>
-          <div className='laptop:py-2 px-4 bg-red-500 text-white rounded-3xl cursor-pointer hover:bg-red-700'>
+          <div onClick={handleLogin} className='laptop:py-2 px-4 bg-red-500 text-white rounded-3xl cursor-pointer hover:bg-red-700'>
             Log In
           </div>
           <div className='flex items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
