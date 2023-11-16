@@ -11,6 +11,7 @@ import {FaShareSquare} from 'react-icons/fa';
 import LoggedInPosts from './LoggedInPosts';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import { UserInfoModal } from './CustomModals';
 
 
 
@@ -85,13 +86,16 @@ const NormalPosts = ({posts,channels}) => {
           </div>
         </div>
         <div className="py-6">
-        {postList?.map(post=>{
+        {postList?.map((post,idx)=>{
             return <div key={post._id} className="mb-2 bg-white rounded-lg border-b-2 border-gray">
               <div className="cursor-pointer grid gap-2 mb-4 py-4 px-8 rounded-2xl hover:bg-gray-100">
                 <div className="flex justify-between gap-4 items-center">
                   <div className="flex items-center gap-2">
                     <img className='rounded-full w-6' src={post?.author?.profileImage} alt='user logo'/>
-                    <div className="text-xs">u/{post?.author?.name}</div>
+                    <div className="text-xs relative">
+                      <div className='hover:underline'> u/{post?.author?.name} </div>
+                      {idx==0 && <div className='absolute shadow-xl top-4 bg-white z-10 text-black px-4 gap-4 py-4 flex flex-col rounded-lg text-md w-[13.5rem] h-[25rem]'><UserInfoModal/></div>}
+                    </div>
                   </div>
                   <div className="bg-blue-700 px-4 py-1 w-fit text-xs text-white rounded-full hover:bg-blue-800">Join</div>
                 </div>

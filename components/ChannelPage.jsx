@@ -50,7 +50,7 @@ export const ChannelDetails=()=>{
           </div>
           <div>
             <div>5.9 K</div>
-            <div><span className='text-[4px]'>🟢</span>Online</div>
+            <div className='flex items-center gap-1'><span className='text-[8px]'>🟢</span>Online</div>
           </div>
           <div>
             <div>Top 1%</div>

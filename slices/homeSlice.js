@@ -22,9 +22,12 @@ const homeSlice = createSlice({
         expandChannel :(state)=>{
             state.channelExpand= !state.channelExpand;
         },
+        showSidebar: (state)=>{
+            state.sidebar= !state.sidebar;
+        }
     }
 })
 
-export const {loginUser,logOutUser,expandChannel,setChannelList,setPostList} = homeSlice.actions;
+export const {loginUser,logOutUser,showSidebar,expandChannel,setChannelList,setPostList} = homeSlice.actions;
 export default homeSlice.reducer;
 

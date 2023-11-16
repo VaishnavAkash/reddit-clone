@@ -1,9 +1,9 @@
-// import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import {AppProvider} from '@/utils/AppProvider';
 import Navbar from '@/components/Navbar';
 
-// const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Reddit - Dive into anything',
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   
   return (
       <html lang="en">
-          <body className='bg-gray-200'>
+          <body className={inter.className}>
             <AppProvider>
               <Navbar/>
                 {children}

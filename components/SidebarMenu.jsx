@@ -6,6 +6,7 @@ import {MdGames} from 'react-icons/md';
 import {FiBarChart2} from 'react-icons/fi';
 import ChannelCard from './ChannelCard';
 import Link from 'next/link';
+import { SideBarItems } from './CustomModals';
 
 const SidebarMenu=()=>{
     return (
@@ -43,7 +44,7 @@ const SidebarMenu=()=>{
             <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
             </div>
           </div>
-          <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg hover:bg-gray-200 transform-gpu group'>
+          <div className='laptop:flex flex-col cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg hover:bg-gray-200 transform-gpu group'>
             <div className='flex justify-between w-full items-center'>
               <div className='flex gap-2 items-center'>
               <MdGames className='text-2xl'/>
@@ -51,6 +52,11 @@ const SidebarMenu=()=>{
               </div>
             <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
             </div>
+            {true && 
+            <div className='w-full px-4'>
+              <SideBarItems/>
+            </div>
+            }
           </div>
       </div>
       </div>
