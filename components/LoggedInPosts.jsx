@@ -16,6 +16,7 @@ import redditBg from '@/assets/redditBg.png';
 import Link from 'next/link';
 import redditWhiteLogo from '@/assets/reddit-white-logo.png';
 import { getPosts,getCarousel } from '@/utils/helper';
+import { ChannelDetails } from './ChannelPage';
 
 const LoggedInPosts = () =>{
 
@@ -33,8 +34,8 @@ const LoggedInPosts = () =>{
     },[])
   
       return (
-          <div className='flex flex-col gap-4'>
-            <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
+          <div className='flex flex-col gap-4 relative'>
+            {false ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
               {carousel?.map((ecar=>{
                 return <Link key={ecar._id} href={''}>
                   <div className='w-[18rem] h-full relative'>
@@ -46,7 +47,7 @@ const LoggedInPosts = () =>{
                 </div>
               </Link>
               }))}
-            </div>
+            </div>:''}
             <div className='w-full gap-8 flex'>
               <div className='laptop:w-[60%] flex flex-col gap-6'>
                 <div className='flex w-full justify-start bg-white rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
@@ -91,8 +92,21 @@ const LoggedInPosts = () =>{
                 </div>
                 </div>
               </div>
-              <div className='laptop:w-[30%] flex justify-start flex-col gap-4'>
-                <div className='w-full justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center bg-white rounded-lg gap-4'>
+              <div className='laptop:w-[30%] flex justify-start flex-col'>
+                {false ? <PostsSidebar/>:<ChannelDetails/>}
+                <div className='flex justify-center'> 
+                  <button className='bg-blue-400 w-fit fixed bottom-4 rounded-full flex text-white px-4 py-2'>Move To Top</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      )
+  }
+
+  const PostsSidebar =()=>{
+    return (
+      <>
+      <div className='w-full justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center bg-white rounded-lg gap-4'>
                   <div className='flex justify-start items-center'>
                     <Image src={premiumLogo} alt='Premium Logo'/>
                     <div>
@@ -146,10 +160,8 @@ const LoggedInPosts = () =>{
                       Reddit, Inc. © 2023. All rights reserved.
                     </div>
                     </div> 
-              </div>
-            </div>
-        </div>
-      )
+      </>
+    )
   }
 
 export default LoggedInPosts;
