@@ -9,6 +9,9 @@ import { FaUsers } from "react-icons/fa";
 import { TbApps } from "react-icons/tb";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { FaBalanceScale } from "react-icons/fa";
+import { LiaEyeSolid } from "react-icons/lia";
+import { FaUserLarge } from "react-icons/fa6";
+import { IoMdExit } from "react-icons/io";
 import userLogo from '@/assets/userLogo.webp';
 import userAvatar from '@/assets/userAvatar.webp';
 import Image from 'next/image';
@@ -69,3 +72,63 @@ export const UserInfoModal = () =>{
     </>
   )
 }
+
+export const ToggleSwitch= () =>{
+  return <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" value="" class="sr-only peer"/>
+    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+</label>
+}
+
+export const LoggedInOptionsModal = () =>{
+  const MenuData1 = [{name:'Online Status',switch:ToggleSwitch},{name:'Profile'},{name:'Style Avatar'},{name:'User Settings'}];
+  const MenuData2= [{name:'Dark Mode',switch:ToggleSwitch}];
+  const MenuData3= [{icon:IoLogoReddit,name:'About Reddit'},{icon:IoIosHelpCircleOutline,name:'Help'},
+  {icon:MdMenuBook,name:'Blog'},{icon:TiMicrophone,name:'Press'},{icon:FaUsers,name:'Communities'},
+  {icon:TbApps,name:'Topics'},{icon:MdOutlinePrivacyTip,name:'Content Policy'},{icon:FaBalanceScale,name:'Privacy Policy'},
+  {icon:FaBalanceScale,name:'User Agreement'},{icon:IoMdExit,name:'Log Out'}];
+
+  const MainMenu = [MenuData1,MenuData2,MenuData3];
+
+  return (
+    <div  className='bg-white absolute h-[40rem] modal-container overflow-y-scroll top-[3.1rem] text-sm right-0 w-56 px-4 py-2 shadow-lg rounded-lg'>
+      <div className="border-b-[2px] border-gray-200 py-4  flex flex-col gap-4">
+        <div className="text-gray-300 text-md cursor-default flex items-center gap-2"> <FaUserLarge className="text-xl"/> My Stuff</div>
+        <div>{MenuData1?.map(item=>{
+            return <div className='hover:bg-gray-100 px-2 text-center flex items-center gap-2 cursor-pointer py-2 rounded-lg'>
+                {item.icon && <item.icon className="text-xl"/>}
+                <div className="flex justify-between w-full">
+                  <div>{item.name}</div>
+                  {item.switch && <item.switch/>}
+                </div>
+            </div>
+        })}
+      </div>
+      </div>
+      <div className="border-b-[2px] border-gray-200 py-4 flex flex-col gap-4">
+        <div className="text-gray-300 text-md flex cursor-default items-center gap-2"><LiaEyeSolid className="text-xl"/> View Options</div>
+        <div>{MenuData2?.map(item=>{
+            return <div className='hover:bg-gray-100 px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg'>
+                {item.icon && <item.icon className="text-xl"/>}
+                <div className="flex justify-between w-full">
+                  <div>{item.name}</div>
+                  {item.switch && <item.switch/>}
+                </div>
+      </div>
+        })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">{MenuData3?.map(item=>{
+           return <div className='hover:bg-gray-100 px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg'>
+               {item.icon && <item.icon className="text-xl"/>}
+               <div className="flex justify-between w-full">
+                  <div>{item.name}</div>
+                  {item.switch && <item.switch/>}
+                </div>
+     </div>
+      })}
+      </div>
+    </div>
+  )
+}
+

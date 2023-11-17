@@ -18,7 +18,7 @@ import {GiPunchBlast} from 'react-icons/gi';
 import { useSelector,useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { loginUser } from '@/slices/homeSlice';
-import { NormalOptionsDropDown } from './CustomModals';
+import { LoggedInOptionsModal, NormalOptionsDropDown } from './CustomModals';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { showSidebar } from '@/slices/homeSlice'; 
 
@@ -100,7 +100,7 @@ const RegularNavbar = () =>{
         <GoSearch/>
         <input className='laptop:w-full bg-transparent outline-none' placeholder='Search Reddit'/>
       </div>
-      <div className='laptop:flex w-[16rem] gap-4'>
+      <div className='laptop:flex w-[16rem] justify-between'>
         <div className='laptop:flex items-center px-4 py-2 bg-gray-200 rounded-3xl cursor-pointer hover:bg-gray-300'>
             <BsQrCodeScan/>
             Get App
@@ -110,7 +110,7 @@ const RegularNavbar = () =>{
           </div>
           <div  className='flex relative items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
             <PiDotsThreeBold />
-            {true && <NormalOptionsDropDown/>}
+            {true && <LoggedInOptionsModal/>  }
           </div>
       </div>
     </div>

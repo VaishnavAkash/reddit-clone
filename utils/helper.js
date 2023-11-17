@@ -31,3 +31,13 @@ export const getCarousel= async()=>{
   const data= await res.json();
   return data.data; 
 }
+
+export const getChannelInfo = async(name) =>{
+  const res = await fetch('https://academics.newtonschool.co/api/v1/reddit/channel/'+name,{
+    headers:{
+      projectID
+    }
+  });
+  const data = await res.json();
+  return data.data;
+}

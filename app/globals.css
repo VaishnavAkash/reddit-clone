@@ -6,3 +6,16 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+.modal-container::-webkit-scrollbar {
+    width: 9px;
+  }
+  
+  .modal-container::-webkit-scrollbar-thumb {
+    background-color: rgb(181, 189, 190); /* Set the color of the thumb */
+    border-radius: 6px; /* Optional: Round the corners of the thumb */
+  }
+  
+  .modal-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Set the color of the track */
+  }

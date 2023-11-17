@@ -13,6 +13,7 @@ import { UserInfoModal } from './CustomModals';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '@/slices/homeSlice';
 import { getPosts,getChannels } from '@/utils/helper';
+import { PiDotsThreeBold } from 'react-icons/pi';
 
 const NormalPosts = () => {
 
@@ -39,7 +40,7 @@ const NormalPosts = () => {
 
   return (
     <div className='laptop:flex text-sm gap-8'>
-      <div className='laptop:w-[70%] px-8 z-20'>
+      <div className='laptop:w-[70%] px-8 z-20 block'>
         <div className="laptop:flex justify-between items-center relative bg-white py-2 px-4 rounded-lg">
           <div>
             <Link href='/createpost'><div className="cursor-pointer border-[1px] py-2 font-semibold border-gray-400 px-4 rounded-full hover:bg-black hover:text-white">Create Post</div></Link>
@@ -73,10 +74,15 @@ const NormalPosts = () => {
                     <img className='rounded-full w-6' src={post?.author?.profileImage} alt='user logo'/>
                     <div className="text-xs relative">
                       <div className='hover:underline'> u/{post?.author?.name} </div>
-                      {idx==0 && <div className='absolute shadow-xl top-4 bg-white z-10 text-black px-4 gap-4 py-4 flex flex-col rounded-lg text-md w-[13.5rem] h-[25rem]'><UserInfoModal/></div>}
+                      {idx==90 && <div className='absolute shadow-xl top-4 bg-white z-10 text-black px-4 gap-4 py-4 flex flex-col rounded-lg text-md w-[13.5rem] h-[25rem]'><UserInfoModal/></div>}
                     </div>
                   </div>
-                  <div className="bg-blue-700 px-4 py-1 w-fit text-xs text-white rounded-full hover:bg-blue-800">Join</div>
+                  <div className='flex items-center gap-2'>
+                    <div className="bg-blue-700 px-4 py-1 w-fit text-xs text-white rounded-full hover:bg-blue-800">Join</div>
+                    <div  className='flex relative items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
+                       <PiDotsThreeBold />
+                    </div>
+                  </div>
                 </div>
                 <div className="text-[13px] font-normal">
                   {post.content}
@@ -94,7 +100,7 @@ const NormalPosts = () => {
         </div>
       </div>
       {/* Right Channel Sidebar */}
-      <ChannelList channels={channels} />
+      <ChannelList/>
     </div>
   )
 }

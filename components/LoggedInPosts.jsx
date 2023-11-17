@@ -26,7 +26,7 @@ const LoggedInPosts = () =>{
     const [post,setPost] = useState([]);
     const [carousel,setCarousel] = useState([]);
     const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
-  
+
     async function getPostsFunc(){
       const data = await Promise.all([getPosts(),getCarousel()]);
       setCarousel(data[0]);
@@ -39,7 +39,7 @@ const LoggedInPosts = () =>{
   
       return (
           <div className='flex flex-col gap-4 relative'>
-            {userLoggedIn ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
+            {userLoggedIn && !window.location.pathname.includes('r/') ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
               {carousel?.map((ecar=>{
                 return <Link key={ecar._id} href={''}>
                   <div className='w-[18rem] h-full relative'>
@@ -56,8 +56,8 @@ const LoggedInPosts = () =>{
               <div className='laptop:w-[60%] flex flex-col gap-6'>
                 <div className='flex w-full justify-start bg-white rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
                     <Image src={UserAvatar} alt="userLogo" width={40} height={10} />
-                    <Link href='/createpost'><input className='cursor-pointer border-2 border-gray w-[78%] px-3 h-10 placeholder:text-black-200' placeholder='Create Post'/></Link>
-                    <FcGallery className='cursor-pointer text-2xl'/>
+                    <Link className='w-full' href='/createpost'><input className='cursor-pointer border-2 border-gray w-full px-3 h-10 placeholder:text-black-200' placeholder='Create Post'/></Link>
+                    <FcGallery className='cursor-pointer text-3xl'/>
                     <HiOutlineLink className='cursor-pointer text-2xl'/>
                 </div>
                 <div className='flex w-full bg-white rounded-lg justify-between items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>

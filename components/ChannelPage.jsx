@@ -4,20 +4,38 @@ import UserAvatar from '@/assets/userAvatar.webp';
 import LoggedInPosts from './LoggedInPosts';
 import { LuCakeSlice } from "react-icons/lu";
 import { FaEyeSlash } from "react-icons/fa";
+import { useEffect, useState } from 'react';
+import { getChannelInfo } from '@/utils/helper';
 
 
-const ChannelPage = () => {
+const ChannelPage = ({id}) => {
+  
+  const [channelInfo,setChannelInfo] = useState({});
+
+  async function getData(){
+    const data = await getChannelInfo(id);
+    console.log(data);
+    setChannelInfo(data);
+  }
+
+  useEffect(()=>{
+    getData();
+  },[]);
+
+
   return (
     <div className='flex flex-col gap-8'>
         <div className='flex flex-col w-full h-40 shadow-lg'>
             <div className='bg-green-600 w-full h-[40%]'></div>
-            <div className='bg-white w-full h-[60%] flex gap-6 px-4'>
+            <div className='bg-white w-full  h-[60%] flex gap-6 px-4'>
               {/* channel Logo */}
-              <div className='px-8 relative top-[-20px] flex justify-center items-center h-full bg-gray-50 border-6 border-black rounded-full'><Image src={UserAvatar} className='w-12 h-12' width='' height='' alt='channel Logo'/></div>
+              <div className='relative w-20 h-20 rounded-full'>
+                <img src={channelInfo?.image} className='w-full h-full rounded-full border-2 absolute bottom-6 border-white' alt='channel Logo'/>
+              </div>
               {/* Channel details */}
               <div >
-                <div className='text-2xl flex items-center gap-4'>Node.js Pros <span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
-                <div className='text-gray-600 text-sm'>r/Node.js Pros</div>
+                <div className='text-2xl flex items-center gap-4'>{channelInfo?.name}<span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
+                <div className='text-gray-600 text-sm'>r/{channelInfo?.name}</div>
               </div>
             </div>
         </div>
