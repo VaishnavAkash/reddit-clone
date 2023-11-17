@@ -6,7 +6,6 @@ function Page() {
 
   return (
     <>
-    <Navbar/>
     <Main/>
     </>
   )

@@ -1,14 +1,15 @@
-import { getChannels, getPosts } from '@/utils/helper';
-import PostsList from './PostsList';
+'use client';
+
+import { useSelector } from 'react-redux';
+import LoggedInPosts from './LoggedInPosts';
+import NormalPosts from './NormalPosts';
 
 
-const Main= async()=>{
-    const [posts,channels] = await Promise.all([getPosts(),getChannels()]);
-  
+const Main= ()=>{
+    const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
+
     return (
-      <>
-        <PostsList posts={posts} channels={channels} />
-      </>
+        !userLoggedIn ? <NormalPosts/> : <LoggedInPosts/>
     );
   }
 

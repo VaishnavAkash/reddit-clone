@@ -1,3 +1,5 @@
+'use client';
+import {useState} from 'react';
 import {AiOutlineHome} from 'react-icons/ai';
 import {BsFillArrowUpRightCircleFill} from 'react-icons/bs';
 import {BsChevronDown} from 'react-icons/bs';
@@ -9,6 +11,13 @@ import Link from 'next/link';
 import { SideBarItems } from './CustomModals';
 
 const SidebarMenu=()=>{
+
+  const [showItems,setShowItems] = useState(false);
+
+  function showMenuItems(){
+    setShowItems(prev=>!prev);
+  }
+
     return (
       <div className='border-e-2 border-gray text-sm bg-white shadow-lg h-[100vh]'>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
@@ -44,15 +53,15 @@ const SidebarMenu=()=>{
             <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
             </div>
           </div>
-          <div className='laptop:flex flex-col cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg hover:bg-gray-200 transform-gpu group'>
+          <div onClick={showMenuItems} className='laptop:flex flex-col cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg hover:bg-gray-200 transform-gpu group'>
             <div className='flex justify-between w-full items-center'>
               <div className='flex gap-2 items-center'>
               <MdGames className='text-2xl'/>
               RESOURCES 
               </div>
-            <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
+              <BsChevronDown className={`transition-transform transform ${showItems ? 'rotate-180 ease-in-out' : 'rotate-0'}`}/>
             </div>
-            {true && 
+            {showItems && 
             <div className='w-full px-4'>
               <SideBarItems/>
             </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import {useState,useEffect} from 'react';
 import {FcGallery} from 'react-icons/fc';
 import Image from 'next/image';
@@ -17,11 +19,13 @@ import Link from 'next/link';
 import redditWhiteLogo from '@/assets/reddit-white-logo.png';
 import { getPosts,getCarousel } from '@/utils/helper';
 import { ChannelDetails } from './ChannelPage';
+import { useSelector } from 'react-redux';
 
 const LoggedInPosts = () =>{
 
     const [post,setPost] = useState([]);
     const [carousel,setCarousel] = useState([]);
+    const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
   
     async function getPostsFunc(){
       const data = await Promise.all([getPosts(),getCarousel()]);
@@ -35,7 +39,7 @@ const LoggedInPosts = () =>{
   
       return (
           <div className='flex flex-col gap-4 relative'>
-            {false ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
+            {userLoggedIn ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
               {carousel?.map((ecar=>{
                 return <Link key={ecar._id} href={''}>
                   <div className='w-[18rem] h-full relative'>

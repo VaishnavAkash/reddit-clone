@@ -1,3 +1,5 @@
+'use client';
+
 import { expandChannel } from '@/slices/homeSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import ChannelCard from './ChannelCard';

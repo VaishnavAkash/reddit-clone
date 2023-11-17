@@ -1,6 +1,6 @@
-'use client';
+'use Client';
 
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import ChannelList from './ChannelList'
 import { BiUpvote } from 'react-icons/bi'
 import { BiDownvote } from 'react-icons/bi'
@@ -8,55 +8,34 @@ import { BiCommentDetail } from 'react-icons/bi'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {BsChevronDown} from 'react-icons/bs'
 import {FaShareSquare} from 'react-icons/fa';
-import LoggedInPosts from './LoggedInPosts';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { UserInfoModal } from './CustomModals';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '@/slices/homeSlice';
+import { getPosts,getChannels } from '@/utils/helper';
 
+const NormalPosts = () => {
 
-
-const PostsList=({posts,channels})=>{
-  const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
-  return userLoggedIn ? <LoggedInPosts/> : <NormalPosts posts={posts} channels={channels} />
-}
-
-
-const NormalPosts = ({posts,channels}) => {
-
+  const dispatch = useDispatch();
     const [genreModal,setGenreModal] = useState(false);
     const [viewMode,setViewMode] = useState(false);
-    const [page,setPage] = useState(1);
-    const [postList,setPostList] = useState(posts);
+    const genreArray = ['Hot','Best','Top','Popular'];
+    const posts = useSelector(store=>store.homeSlice.postsData);
+    const channels = useSelector(store=>store.homeSlice.channelsData);
 
     function handleViewMode(){
         setViewMode(prev=>!prev);
     }
 
-    // console.log('hello');
 
-        // async function getInfinitePost(){
-        //     setPage(prev=>prev+1);
-        //     const data = await getInfiniteScroll(page);
-        //     console.log(data);
-        //     console.log('hi im called')
-        //     setPostList(prev=>[...prev,data]);
-        // }
+    useEffect(()=>{
+      async function getData(){
+        const data = await Promise.all([getPosts(),getChannels()]);
+        dispatch(setData({posts:data[0],channels:data[1]}));
+      }
+      getData();
+    },[])
 
-        // const onScroll = ()=>{
-        //     if (
-        //         window.innerHeight + window.scrollY >= document.body.offsetHeight
-        //     ){getInfinitePost()}
-        //     else{
-        //         console.log('not yet')
-        //     }
-        // }
-
-        // useEffect(()=>{
-        //     window.addEventListener('scroll',onScroll);
-        //     return ()=> window.removeEventListener('scroll',onScroll);
-        // },[page])
-
-        const genreArray = ['Hot','Best','Top','Popular'];
 
   return (
     <div className='laptop:flex text-sm gap-8'>
@@ -86,9 +65,9 @@ const NormalPosts = ({posts,channels}) => {
           </div>
         </div>
         <div className="py-6">
-        {postList?.map((post,idx)=>{
-            return <div key={post._id} className="mb-2 bg-white rounded-lg border-b-2 border-gray">
-              <div className="cursor-pointer grid gap-2 mb-4 py-4 px-8 rounded-2xl hover:bg-gray-100">
+        {posts?.map((post,idx)=>{
+            return <div key={post._id} className=" bg-white rounded-lg border-b-2 border-gray">
+              <div className="cursor-pointer my-4 grid gap-2 py-4 px-8 rounded-2xl hover:bg-gray-100">
                 <div className="flex justify-between gap-4 items-center">
                   <div className="flex items-center gap-2">
                     <img className='rounded-full w-6' src={post?.author?.profileImage} alt='user logo'/>
@@ -120,7 +99,4 @@ const NormalPosts = ({posts,channels}) => {
   )
 }
 
-
-
-export default PostsList;
-
+export default NormalPosts;
