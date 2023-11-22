@@ -7,7 +7,6 @@ import {HiOutlineLink} from 'react-icons/hi';
 import {BiUpvote} from 'react-icons/bi';
 import {BiDownvote} from 'react-icons/bi';
 import {BiCommentDetail} from 'react-icons/bi';
-import { FaShareSquare } from 'react-icons/fa';
 import UserAvatar from '@/assets/userAvatar.webp'
 import {BsFire} from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -20,31 +19,71 @@ import redditWhiteLogo from '@/assets/reddit-white-logo.png';
 import { getPosts,getCarousel } from '@/utils/helper';
 import { ChannelDetails } from './ChannelPage';
 import { useSelector } from 'react-redux';
+import { IoMdShareAlt } from "react-icons/io";
+import Loader from './Loader';
+import { projectID } from '@/utils/constants';
 
-const LoggedInPosts = () =>{
-
+const LoggedInPosts = ({id=''}) =>{
+    const [loader,setLoader] = useState(true);
     const [post,setPost] = useState([]);
     const [carousel,setCarousel] = useState([]);
     const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
+    const darkMode = useSelector(store=>store.homeSlice.darkMode);
 
     async function getPostsFunc(){
-      const data = await Promise.all([getPosts(),getCarousel()]);
+      const data = await Promise.all([getPosts(id),getCarousel()]);
       setCarousel(data[0]);
       setPost(data[1]);
+      setLoader(false);
+    }
+
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
+
+   async function upvotePost(id=''){
+    console.log(id);
+      const res = await fetch(`https://academics.newtonschool.co/api/v1/reddit/like/${id}`,{
+        headers:{
+          'Content-Type': 'application/json',
+          "Authorization" : `Bearer ${localStorage.getItem('reddit-token')}`,
+          projectID
+        }
+      })
+      const data = await res.json();
+      console.log(data);
+
+      getPostsFunc();
+    }
+
+   async function downvotePost(id){
+      await fetch(`https://academics.newtonschool.co/api/v1/reddit/like/${id}`,{
+        headers:{
+          Authorization : localStorage.getItem('reddit-token'),
+          projectID
+        }
+      })
+      getPostsFunc();
     }
   
     useEffect(()=>{
       getPostsFunc();
     },[])
+
+    if(loader) return <Loader/>;
+    
   
       return (
-          <div className='flex flex-col gap-4 relative'>
-            {userLoggedIn && !window.location.pathname.includes('r/') ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
+          <div className={`flex flex-col gap-4 relative ${darkMode}`}>
+            {userLoggedIn && window.location.pathname.includes('popular') ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
               {carousel?.map((ecar=>{
                 return <Link key={ecar._id} href={''}>
                   <div className='w-[18rem] h-full relative'>
                     <img className='w-full h-full rounded-lg  bg-gradient-to-t from-transparent to-black' src={ecar?.author?.profileImage} alt="" /> 
-                    <div className='absolute bottom-5 text-white px-4'>
+                    <div className={`absolute bottom-5 px-4`}>
                       <div>r/{ecar.channel.name}</div>
                       <div>{ecar.content.slice(0,32)}...</div>
                   </div>
@@ -52,43 +91,43 @@ const LoggedInPosts = () =>{
               </Link>
               }))}
             </div>:''}
-            <div className='w-full gap-8 flex'>
+            <div className={`w-full gap-8 flex ${darkMode ? 'bg-black text-white': 'bg-white text-black'}`}>
               <div className='laptop:w-[60%] flex flex-col gap-6'>
-                <div className='flex w-full justify-start bg-white rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
+                <div className={`flex w-full justify-start  rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray`}>
                     <Image src={UserAvatar} alt="userLogo" width={40} height={10} />
                     <Link className='w-full' href='/createpost'><input className='cursor-pointer border-2 border-gray w-full px-3 h-10 placeholder:text-black-200' placeholder='Create Post'/></Link>
                     <FcGallery className='cursor-pointer text-3xl'/>
                     <HiOutlineLink className='cursor-pointer text-2xl'/>
                 </div>
-                <div className='flex w-full bg-white rounded-lg justify-between items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
+                <div className='flex w-full  rounded-lg justify-between items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
                   <div className='flex gap-4'>
                     <div className='flex items-center cursor-pointer gap-1 active:text-blue-400'><BsFire/> Hot</div>  
                     <div className='flex items-center cursor-pointer gap-1 active:text-blue-400'><BsPatchCheckFill/>Latest</div>
                   </div>
                     <div className="cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 hover:bg-gray-300">
                       <GiHamburgerMenu/>
-                      <BsChevronDown/>  
+                      <BsChevronDown/>
                   </div>
                 </div>
                 <div className='flex w-full items-center '>
                 <div className='flex flex-col gap-8'>
                   {post?.map(epost=>{
-                    return <div key={epost._id} className='flex w-fit shadow-lg bg-white rounded-lg'>
-                        <div className='bg-gray-100 w-12 py-2 pb-6 px-2 flex flex-col items-center rounded-lg'>
-                          <BiUpvote className='text-xl'/>
+                    return <div key={epost._id} className='flex w-fit shadow-lg rounded-lg'>
+                        <div className={`${darkMode ? 'bg-gray-700':'bg-gray-100'} w-12 py-2 pb-6 px-2 flex flex-col items-center rounded-lg`}>
+                          <BiUpvote className='text-xl cursor-pointer hover:text-red-500' onClick={()=>upvotePost(epost._id)}/>
                           {epost?.likeCount}
-                          <BiDownvote className='text-xl'/>
+                          <BiDownvote className='text-xl cursor-pointer hover:text-blue-500' onClick={()=>downvotePost(epost._id)} />
                         </div>
                         <div className='py-4 gap-3 flex flex-col px-2'>
                           <div className='flex text-[12px] gap-2 items-center'>
                             <img className='w-9 h-9 rounded-full' src={epost?.channel?.image} />
-                            <div>r/{epost?.channel?.name}</div>
-                            <div className='text-gray-600'>Posted By r/{epost?.author?.name}</div>
+                            <Link href={`r/${epost?.channel?._id}`}><div>r/{epost?.channel?.name}</div></Link>
+                            <Link href={`u/${epost?.author?._id}`}><div className='text-gray-600'>Posted By u/{epost?.author?.name}</div></Link>
                           </div>
                           <div className='text-sm'>{epost?.content}</div>
                           <div className='text-sm flex gap-4'>
                             <div className='flex gap-1'><BiCommentDetail className='text-xl'/> {epost.commentCount} Comments</div>
-                            <div className='flex gap-1'><FaShareSquare className='text-xl'/> Share</div>
+                            <div className='flex gap-1'><IoMdShareAlt className='text-xl'/> Share</div>
                             </div>
                         </div>
                     </div> 
@@ -96,10 +135,10 @@ const LoggedInPosts = () =>{
                 </div>
                 </div>
               </div>
-              <div className='laptop:w-[30%] flex justify-start flex-col'>
-                {false ? <PostsSidebar/>:<ChannelDetails/>}
-                <div className='flex justify-center'> 
-                  <button className='bg-blue-400 w-fit fixed bottom-4 rounded-full flex text-white px-4 py-2'>Move To Top</button>
+              <div className='laptop:w-[30%] flex justify-start flex-col gap-4'>
+                {window.location.pathname.includes('r/') ? <ChannelDetails/>:<PostsSidebar/>}
+                <div className='flex justify-center sticky top-[88%] pt-8'> 
+                  <button onClick={scrollToTop} className={` w-fit rounded-full flex ${darkMode ? 'bg-blue-500 text-white':'bg-blue-400 text-black'}  px-4 py-2`}>Move To Top</button>
                 </div>
               </div>
             </div>
@@ -108,10 +147,12 @@ const LoggedInPosts = () =>{
   }
 
   const PostsSidebar =()=>{
+    const darkMode = useSelector(store=>store.homeSlice.darkMode);
+
     return (
       <>
-      <div className='w-full justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center bg-white rounded-lg gap-4'>
-                  <div className='flex justify-start items-center'>
+      <div className={`w-full justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>
+                  <div className='flex justify-start w-full gap-4 items-center'>
                     <Image src={premiumLogo} alt='Premium Logo'/>
                     <div>
                       <div className='text-[12px]'>Reddit Premium</div>
@@ -122,7 +163,7 @@ const LoggedInPosts = () =>{
                     Try Now
                   </div>
                   </div>
-                  <div className='w-full relative shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 bg-white rounded-lg'>
+                  <div className={`w-full relative shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}  rounded-lg`}>
                       <Image src={redditBg} alt='redditBg' width='' height=''/>
                       <div className='flex justify-start text-start items-center pb-4'>
                         <Image className='absolute top-[2.4rem] left-2 w-12 h-18' src={redditWhiteLogo} alt='redditWhiteLogo' width='' height=''/>
@@ -133,11 +174,11 @@ const LoggedInPosts = () =>{
                         Come here to check in with your favorite communities.
                       </div>
                       <div className='flex flex-col w-full gap-2'>
-                        <div className='cursor-pointer bg-blue-700 text-white text-center px-4 py-2 rounded-full w-full hover:bg-transparent hover:text-blue-700 border-[1px] hover:border-blue-700 '>Create Post</div>
-                        <div className='cursor-pointer border-[1px] border-blue-700 text-center text-blue-700 px-4 py-2 rounded-full w-full hover:bg-blue-100'>Create Community</div>
+                        <div className='cursor-pointer bg-blue-700 text-white text-center px-4 py-2 rounded-full w-full hover:bg-transparent hover:text-blue-700 border-[1px] hover:border-blue-700'>Create Post</div>
+                        <div className={`cursor-pointer border-[1px] border-blue-900 text-center ${darkMode ? 'text-white' : 'text-gray-800'} px-4 py-2 rounded-full w-full hover:bg-blue-100 hover:text-black`}>Create Community</div>
                       </div>
                   </div> 
-                  <div className='w-full sticky top-16 shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 bg-white rounded-lg'>
+                  <div className={`w-full sticky top-16 shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg`}>
                     <div className='flex w-full  text-[0.8rem] border-b-[1px] border-gray'>
                       <div className='w-[40%] text-start'>
                         <div>User Agreement</div>

@@ -6,16 +6,18 @@ import { LuCakeSlice } from "react-icons/lu";
 import { FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { getChannelInfo } from '@/utils/helper';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '@/slices/homeSlice';
 
 
 const ChannelPage = ({id}) => {
   
-  const [channelInfo,setChannelInfo] = useState({});
+  const channelInfo = useSelector(store=>store.homeSlice.channelsData);
+  const dispatch = useDispatch();
 
   async function getData(){
     const data = await getChannelInfo(id);
-    console.log(data);
-    setChannelInfo(data);
+    dispatch(setData({channels:data})); 
   }
 
   useEffect(()=>{
@@ -40,24 +42,26 @@ const ChannelPage = ({id}) => {
             </div>
         </div>
         <div className='flex justify-center w-full'>
-          <LoggedInPosts/>
+          <LoggedInPosts id={id} />
         </div>
     </div>
   )
 }
 
 export const ChannelDetails=()=>{
+  const channel = useSelector(store=>store.homeSlice.channelsData);
+
   return (
     <div className='bg-white shadow-lg rounded-lg'>
       <div className='bg-blue-300 w-full h-10 py-2'></div>
       <div className='bg-white w-full px-6 pb-4 flex flex-col gap-2'>
         {/* First Half */}
         <div>
-          <div className='flex items-center'>
-            <Image className='w-12 h-12 rounded-full' src={UserAvatar} width='' height='' alt='channel Description Logo'/>
-            <div className='text-sm'>r/Node.js Pros</div>
+          <div className='flex items-center gap-4'>
+            <img className='w-12 h-12 rounded-full' src={channel?.image} width='' height='' alt='channel Description Logo'/>
+            <div className='text-sm'>r/{channel?.name}</div>
           </div>
-          <div className='text-sm text-gray-500'>Discuss the ins and outs of server-side JavaScript. Share tips, best practices, and learn more about Node.js.</div>
+          <div className='text-sm text-gray-500'>{channel?.description}</div>
           <div className='flex items-center gap-4'><LuCakeSlice/> <span className='text-gray-500'>Created Mon Aug 21 2023</span> </div>
         </div>
         {/* Second Half */}
@@ -76,12 +80,12 @@ export const ChannelDetails=()=>{
           </div>
         </div>
         {/* Third Half */}
-        <div>
+        {/* <div>
             <div className='w-full bg-blue-400 cursor-pointer text-white rounded-full text-center px-4 py-2'>Share</div>
             <div className='flex items-center gap-4 text-gray-500'>
                 <FaEyeSlash className='text-black'/> Community Theme 
             </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

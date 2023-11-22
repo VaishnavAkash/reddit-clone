@@ -35,11 +35,13 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState={
     userLoggedIn : false,
-    lightMode : true,
+    darkMode : false,
     sidebar: true,
     channelExpand : false,
     postsData: [],
     channelsData:[],
+    userDetails:{},
+    showLoginModal: false,
 }
 
 
@@ -61,12 +63,29 @@ const initialState={
             state.sidebar= !state.sidebar;
         },
         setData: (state,action)=>{
-            state.postsData = action.payload.posts;
-            state.channelsData = action.payload.channels;
+            if(action.payload.posts){
+                state.postsData = action.payload.posts
+            };
+            if(action.payload.channels){
+                state.channelsData = action.payload.channels;
+            }
+        },
+        setUserDetails:(state,action)=>{
+            state.userDetails = action.payload;
+        },
+        setShowLoginModal:(state,action)=>{
+            if(state.userLoggedIn) return;
+            state.showLoginModal = action.payload;
+        },
+        setLightMode: (state)=>{
+            state.darkMode = !state.darkMode;
         },
     }
 })
 
-export const {loginUser,logOutUser,showSidebar,expandChannel,setData} = homeSlice.actions;
+export const {loginUser,logOutUser,showSidebar,
+    expandChannel,setData,setUserDetails,
+    setShowLoginModal,setLightMode} = homeSlice.actions;
+
 export default homeSlice.reducer;
 

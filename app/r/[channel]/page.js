@@ -8,7 +8,6 @@ import ChannelPage from '@/components/ChannelPage';
 const Page = ({params}) => {  
 
   const showSidebar = useSelector(store=>store.homeSlice.sidebar);
-  console.log(params.channel);
   
   return (
     <div className='laptop:flex relative h-[100vh]'>
