@@ -109,7 +109,7 @@ const RegularNavbar = () =>{
         <input className='laptop:w-full bg-transparent outline-none' placeholder='Search Reddit'/>
       </div>
       <div className='laptop:flex w-[16rem] justify-between'>
-        <div className='laptop:flex items-center px-4 py-2 bg-gray-200 rounded-3xl cursor-pointer hover:bg-gray-300'>
+        <div className='laptop:flex items-center px-4 py-2 gap-3 bg-gray-200 rounded-3xl cursor-pointer hover:bg-gray-300'>
             <BsQrCodeScan/>
             Get App
           </div>
@@ -119,6 +119,7 @@ const RegularNavbar = () =>{
           <div  className='flex relative items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
             <PiDotsThreeBold />
             {!userLoggedIn && <NormalOptionsDropDown/>}
+            {/* {!userLoggedIn && <LoggedInOptionsModal/>} */}
           </div>
       </div>
     </div>
