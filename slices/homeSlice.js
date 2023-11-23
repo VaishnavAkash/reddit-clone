@@ -42,6 +42,7 @@ const initialState={
     channelsData:[],
     userDetails:{},
     showLoginModal: false,
+    commentPageData:{},
 }
 
 
@@ -80,12 +81,20 @@ const initialState={
         setLightMode: (state)=>{
             state.darkMode = !state.darkMode;
         },
+        setCommentPageData: (state, action) => {
+            if (action.payload.post) {
+              state.commentPageData.post = action.payload.post;
+            }
+            if (action.payload.comments) {
+              state.commentPageData.comments = action.payload.comments;
+            }
+          }
     }
 })
 
 export const {loginUser,logOutUser,showSidebar,
     expandChannel,setData,setUserDetails,
-    setShowLoginModal,setLightMode} = homeSlice.actions;
+    setShowLoginModal,setLightMode,setCommentPageData} = homeSlice.actions;
 
 export default homeSlice.reducer;
 

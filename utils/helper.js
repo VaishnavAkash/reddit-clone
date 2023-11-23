@@ -1,18 +1,17 @@
-import { API_INFINITE_SCROLL, API_POSTS } from "@/utils/constants";
+import { API_INFINITE_SCROLL, API_POSTS, AUTHOR_API, COMMENTS_API } from "@/utils/constants";
 import { API_COMMUNITIES } from "@/utils/constants";
 import { projectID } from "@/utils/constants";
+import { useSelector } from "react-redux";
 
+export const getSelector = (value) => useSelector(store=>store.homeSlice[value]);
 export const getPosts= async(id='')=>{
-
-  console.log(id);
-
     const res = await fetch(API_POSTS+id,{
         headers:{
             projectID
         }
     })
     const data= await res.json();
-    console.log(data);
+    console.log(data.data);
     return data.data; 
   }
 
@@ -37,12 +36,14 @@ export const getCarousel= async()=>{
 }
 
 export const getChannelInfo = async(name) =>{
+  console.log(name)
   const res = await fetch('https://academics.newtonschool.co/api/v1/reddit/channel/'+name,{
     headers:{
       projectID
     }
   });
   const data = await res.json();
+  console.log(data);
   return data.data;
 }
 
@@ -86,3 +87,30 @@ export async function handleSignUpUser(name,email,password){
   localStorage.setItem('reddit-token',data.token);
   return data;
 }
+
+export const getComments= async(id)=>{
+
+  console.log(id);
+
+    const res = await fetch(`${COMMENTS_API+id}/comments`,{
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem('reddit-token')}`,
+            projectID
+        }
+    })
+    const data= await res.json();
+    console.log(data);
+    return data.data; 
+  }
+
+  export const getAuthor = async(id) =>{
+    const res = await fetch(AUTHOR_API+id,{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('reddit-token')}`,
+        projectID
+      }
+    })
+    const data = await res.json();
+    console.log(data);
+    return data.data;
+  }

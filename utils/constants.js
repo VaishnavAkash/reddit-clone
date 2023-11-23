@@ -7,6 +7,10 @@ export const API_MAX_POSTS = `https://academics.newtonschool.co/api/v1/reddit/po
 
 export const API_INFINITE_SCROLL = `https://academics.newtonschool.co/api/v1/reddit/post?limit=10&page=`;
 
+export const COMMENTS_API = 'https://academics.newtonschool.co/api/v1/reddit/post/'
+
+export const AUTHOR_API = 'https://academics.newtonschool.co/api/v1/reddit/channel/';
+
 export const API_SEARCH = `fetch('https://academics.newtonschool.co/api/v1/reddit/post?search={"field":"search_term_here"}', {
     headers: {
         'projectID': 'YOUR_PROJECT_ID'
@@ -48,8 +52,10 @@ export const API_DELETE_SUBREDDITS = `fetch('https://academics.newtonschool.co/a
        'projectID': 'YOUR_PROJECT_ID'
     }})`;
 
+
+
 //     👉GET: Use the below API for getting user by ID
-// fetch('https://academics.newtonschool.co/api/v1/reddit/channel/:userID', {
+// fetch(':userID', {
 //     headers: {
 //         'Authorization': 'Bearer YOUR_JWT_TOKEN',
 //        'projectID': 'YOUR_PROJECT_ID'

@@ -109,8 +109,8 @@ export const LoggedInOptionsModal = () =>{
     <div  className={` absolute h-[40rem] modal-container overflow-y-scroll top-[3.1rem] text-sm right-0 w-56 px-4 py-2 shadow-lg rounded-lg z-30  ${darkMode ? 'bg-black text-white':'bg-white text-black hover:bg-gray-50'}`}>
       <div className="border-b-[2px] border-gray-200 py-4  flex flex-col gap-4">
         <div className="text-gray-300 text-md cursor-default flex items-center gap-2"> <FaUserLarge className="text-xl"/> My Stuff</div>
-        <div>{MenuData1?.map(item=>{
-            return <div className={`px-2 text-center flex items-center gap-2 cursor-pointer py-2 rounded-lg  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
+        <div>{MenuData1?.map((item,idx)=>{
+            return <div key={idx} className={`px-2 text-center flex items-center gap-2 cursor-pointer py-2 rounded-lg  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
                 {item.icon && <item.icon className="text-xl"/>}
                 <div className="flex justify-between w-full">
                   <div>{item.name}</div>
@@ -122,8 +122,8 @@ export const LoggedInOptionsModal = () =>{
       </div>
       <div className="border-b-[2px] border-gray-200 py-4 flex flex-col gap-4">
         <div className="text-gray-300 text-md flex cursor-default items-center gap-2"><LiaEyeSolid className="text-xl"/> View Options</div>
-        <div>{MenuData2?.map(item=>{
-            return <div className={`px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg`}>
+        <div>{MenuData2?.map((item,idx)=>{
+            return <div key={idx} className={`px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg`}>
                 {item.icon && <item.icon className="text-xl"/>}
                 <div className="flex justify-between w-full">
                   <div>{item.name}</div>
@@ -133,8 +133,8 @@ export const LoggedInOptionsModal = () =>{
         })}
         </div>
       </div>
-      <div className="flex flex-col gap-2">{MenuData3?.map(item=>{
-           return <div className={`px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
+      <div className="flex flex-col gap-2">{MenuData3?.map((item,idx)=>{
+           return <div key={idx} className={`px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
                {item.icon && <item.icon className="text-xl"/>}
                <div className="flex justify-between w-full">
                   <div>{item.name}</div>

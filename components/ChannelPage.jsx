@@ -5,7 +5,7 @@ import LoggedInPosts from './LoggedInPosts';
 import { LuCakeSlice } from "react-icons/lu";
 import { FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from 'react';
-import { getChannelInfo } from '@/utils/helper';
+import { getChannelInfo, getSelector } from '@/utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setData } from '@/slices/homeSlice';
 
@@ -50,9 +50,10 @@ const ChannelPage = ({id}) => {
 
 export const ChannelDetails=()=>{
   const channel = useSelector(store=>store.homeSlice.channelsData);
-
+  const darkMode = getSelector('darkMode');
+  
   return (
-    <div className='bg-white shadow-lg rounded-lg'>
+    <div className={`bg-white ${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
       <div className='bg-blue-300 w-full h-10 py-2'></div>
       <div className='bg-white w-full px-6 pb-4 flex flex-col gap-2'>
         {/* First Half */}

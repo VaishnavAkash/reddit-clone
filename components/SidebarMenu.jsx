@@ -20,7 +20,7 @@ const SidebarMenu=()=>{
   }
 
     return (
-      <div className={`border-e-[1px] ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
+      <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
         <Link href='/'>
           <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg '>

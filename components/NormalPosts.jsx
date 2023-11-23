@@ -49,7 +49,7 @@ const NormalPosts = () => {
 
   if(loader) return <Loader/>;
 
-  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] backdrop-blur-sm z-40 h-[100%] fixed left-0 top-4 flex justify-center items-center'>
+  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] bg-black bg-opacity-20 z-40 h-[100%] fixed left-0 top-4 flex justify-center items-center'>
     <LoginForm/>
     </div> : (
     <div className='laptop:flex text-sm gap-8'>
