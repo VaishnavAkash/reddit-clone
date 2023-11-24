@@ -1,13 +1,12 @@
 'use client';
-import Image from 'next/image';
-import UserAvatar from '@/assets/userAvatar.webp';
 import LoggedInPosts from './LoggedInPosts';
 import { LuCakeSlice } from "react-icons/lu";
 import { FaEyeSlash } from "react-icons/fa";
-import { useEffect, useState } from 'react';
-import { getChannelInfo, getSelector } from '@/utils/helper';
+import { useEffect } from 'react';
+import { changeCommunityTheme, getAuthor, getChannelInfo, getSelector } from '@/utils/helper';
 import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '@/slices/homeSlice';
+import { setCommunityTheme, setData } from '@/slices/homeSlice';
+import { ToggleSwitch } from './CustomModals';
 
 
 const ChannelPage = ({id}) => {
@@ -15,13 +14,20 @@ const ChannelPage = ({id}) => {
   const channelInfo = useSelector(store=>store.homeSlice.channelsData);
   const dispatch = useDispatch();
 
-  async function getData(){
+  async function getChannelData(){
     const data = await getChannelInfo(id);
     dispatch(setData({channels:data})); 
   }
 
+  async function getAuthorData(){
+    const data = await getAuthor(id);
+    dispatch(setData({channels:data}));
+  }
+
   useEffect(()=>{
-    getData();
+    if(window.location.pathname.includes('r/')) getChannelData();
+    else if(window.location.pathname.includes('u/')) getAuthorData();
+    else return;
   },[]);
 
 
@@ -49,12 +55,19 @@ const ChannelPage = ({id}) => {
 }
 
 export const ChannelDetails=()=>{
-  const channel = useSelector(store=>store.homeSlice.channelsData);
+  const dispatch = useDispatch();
+  const channel = getSelector('channelsData');
   const darkMode = getSelector('darkMode');
+  const communityTheme = getSelector('communityTheme');
   
+  function changeBgColors(){
+    const color = changeCommunityTheme();
+    dispatch(setCommunityTheme(color));
+  }
+
   return (
-    <div className={`bg-white ${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
-      <div className='bg-blue-300 w-full h-10 py-2'></div>
+    <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
+      <div className={`${communityTheme} z-50 w-full h-10 py-2`}></div>
       <div className='bg-white w-full px-6 pb-4 flex flex-col gap-2'>
         {/* First Half */}
         <div>
@@ -81,12 +94,12 @@ export const ChannelDetails=()=>{
           </div>
         </div>
         {/* Third Half */}
-        {/* <div>
-            <div className='w-full bg-blue-400 cursor-pointer text-white rounded-full text-center px-4 py-2'>Share</div>
+        <div>
+            <div className='w-full bg-blue-400 cursor-pointer text-white rounded-full bg- text-center flex flex-col gap-3 px-4 py-2'>Share</div>
             <div className='flex items-center gap-4 text-gray-500'>
-                <FaEyeSlash className='text-black'/> Community Theme 
+                <FaEyeSlash className='text-black'/> Community Theme <ToggleSwitch onClick={changeBgColors} />
             </div>
-        </div> */}
+        </div>
       </div>
     </div>
   )

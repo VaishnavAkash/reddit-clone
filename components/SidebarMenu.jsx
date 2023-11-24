@@ -6,10 +6,10 @@ import {BsChevronDown} from 'react-icons/bs';
 import {MdHotelClass} from 'react-icons/md';
 import {MdGames} from 'react-icons/md';
 import {FiBarChart2} from 'react-icons/fi';
-import ChannelCard from './ChannelCard';
 import Link from 'next/link';
 import { SideBarItems } from './CustomModals';
 import { useSelector } from 'react-redux';
+import {notify} from '@/utils/helper.js';
 
 const SidebarMenu=()=>{
 
@@ -36,22 +36,22 @@ const SidebarMenu=()=>{
         </Link>
       </div>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
-      <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg transform-gpu group'>
+      <div onClick={()=>notify('Feature coming soon...')} className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg'>
             <div className='flex justify-between w-full items-center '>
               <div className='flex gap-2 items-center'>
               <FiBarChart2 className='text-2xl'/>
               RECENT
               </div>
-            <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
+            <BsChevronDown className=''/>
             </div>
           </div>
-          <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg transform-gpu group'>
+          <div onClick={()=>notify('Feature coming soon...')} className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg'>
             <div className='flex justify-between w-full items-center'>
               <div className='flex gap-2 items-center'>
               <MdHotelClass className='text-2xl'/>
               TOPICS 
               </div>
-            <BsChevronDown className='transition-transform transform rotate-0 group-hover:rotate-180'/>
+            <BsChevronDown className=''/>
             </div>
           </div>
           <div onClick={showMenuItems} className='laptop:flex flex-col cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg transform-gpu group'>

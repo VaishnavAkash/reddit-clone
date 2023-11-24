@@ -1,13 +1,18 @@
 'use client';
 
 import SidebarMenu from '@/components/SidebarMenu.jsx';
-import { useSelector } from "react-redux";
 import CreatePost from '@/components/CreatePost';
+import { getSelector } from '@/utils/helper';
 
 const Page = () => {  
 
-  const showSidebar = useSelector(store=>store.homeSlice.sidebar);
-  console.log(showSidebar);
+  const showSidebar = getSelector('sidebar');
+  const userLoggedIn = getSelector('userLoggedIn');
+
+  if(!userLoggedIn) {
+    dispatch(setShowLoginModal(true));  
+    redirect('/');
+  };
   
   return (
     <div className='laptop:flex relative h-[100vh]'>

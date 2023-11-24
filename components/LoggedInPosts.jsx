@@ -13,22 +13,32 @@ import premiumLogo from '@/assets/premiumLogo.png'
 import redditBg from '@/assets/redditBg.png';
 import Link from 'next/link';
 import redditWhiteLogo from '@/assets/reddit-white-logo.png';
-import { getPosts,getCarousel } from '@/utils/helper';
+import { getPosts,getCarousel, getSelector } from '@/utils/helper';
 import { ChannelDetails } from './ChannelPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from './Loader';
-import { projectID } from '@/utils/constants';
-import PostsList from './PostsList';
+import { ViewOptionsModal } from './CustomModals';
+import {LoggedInPostsList} from './PostsList';
+import { setViewOptionsDropdown } from '@/slices/homeSlice';
 
 const LoggedInPosts = ({id=''}) =>{
+
+    const dispatch = useDispatch();
     const [loader,setLoader] = useState(true);
     const [post,setPost] = useState([]);
     const [carousel,setCarousel] = useState([]);
-    const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
-    const darkMode = useSelector(store=>store.homeSlice.darkMode);
+    const userLoggedIn = getSelector('userLoggedIn');
+    const darkMode = getSelector('darkMode');
+    const viewOptionsDropdown = getSelector('viewOptionsDropdown');
+    const viewOptionsWidth = getSelector('viewOptionsWidth');
+
+
+    function handleViewMode(){
+      dispatch(setViewOptionsDropdown(!viewOptionsDropdown));
+  }
 
     async function getPostsFunc(){
-      const data = await Promise.all([getPosts(id),getCarousel()]);
+      const data = await Promise.all([getPosts(),getCarousel()]);
       setCarousel(data[0]);
       setPost(data[1]);
       setLoader(false);
@@ -49,15 +59,15 @@ const LoggedInPosts = ({id=''}) =>{
     
   
       return (
-          <div className={`flex flex-col gap-4 relative ${darkMode}`}>
+          <div className={`flex flex-col relative  ${viewOptionsWidth=='Card' ?'gap-8 px-8' :'px-4 gap-4'} py-8`}>
             {userLoggedIn && window.location.pathname.includes('popular') ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
-              {carousel?.map((ecar=>{
-                return <Link key={ecar._id} href={`r/${ecar?._id}/comments/${ecar?.id}`}>
+              {carousel?.map(((ecar,idx)=>{
+                return <Link key={ecar._id} href={`r/${ecar?._id}/comments/${ecar?._id}`}>
                   <div className='w-[18rem] h-full relative'>
-                    <img className='w-full h-full rounded-lg  bg-gradient-to-t from-transparent to-black' src={ecar?.author?.profileImage} alt="" /> 
+                    <img className='w-full h-full rounded-lg  bg-gradient-to-t from-transparent to-black' src={`https://loremflickr.com/320/240?random=${idx+1}`} alt="" /> 
                     <div className={`absolute bottom-5 px-4`}>
-                      <div>r/{ecar.channel.name}</div>
-                      <div>{ecar.content.slice(0,32)}...</div>
+                      <div className='text-white'>r/{ecar.channel.name}</div>
+                      <div className='text-white'>{ecar.content.slice(0,32)}...</div>
                   </div>
                 </div>
               </Link>
@@ -73,22 +83,25 @@ const LoggedInPosts = ({id=''}) =>{
                 </div>
                 <div className='flex w-full  rounded-lg justify-between items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
                   <div className='flex gap-4'>
-                    <div className='flex items-center cursor-pointer gap-1 active:text-blue-400'><BsFire/> Hot</div>  
-                    <div className='flex items-center cursor-pointer gap-1 active:text-blue-400'><BsPatchCheckFill/>Latest</div>
+                    <div className='flex items-center cursor-pointer gap-1 active:text-pink-400'><BsFire/> Hot</div>  
+                    <div className='flex items-center cursor-pointer gap-1 active:text-pink-500'><BsPatchCheckFill/>Latest</div>
                   </div>
-                    <div className="cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 hover:bg-gray-300">
+                  <div className='cursor-pointer relative flex items-center px-4 py-2 rounded-full'>
+                    <div onClick={handleViewMode} className="cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 hover:bg-gray-300">
                       <GiHamburgerMenu/>
-                      <BsChevronDown/>
-                  </div>
+                      <BsChevronDown/>  
+                    </div>
+                  {viewOptionsDropdown && <ViewOptionsModal/>}
+                </div>
                 </div>
                 <div className='flex w-full items-center '>
-                  <PostsList post={post} />
+                  <LoggedInPostsList post={post} />
                 </div>
               </div>
               <div className='laptop:w-[30%] flex justify-start flex-col gap-4'>
                 {window.location.pathname.includes('r/') ? <ChannelDetails/>:<PostsSidebar/>}
                 <div className='flex justify-center sticky top-[88%] pt-8'> 
-                  <button onClick={scrollToTop} className={` w-fit rounded-full flex ${darkMode ? 'bg-blue-500 text-white':'bg-blue-400 text-black'}  px-4 py-2`}>Move To Top</button>
+                  <button onClick={scrollToTop} className={` w-fit rounded-full flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
                 </div>
               </div>
             </div>

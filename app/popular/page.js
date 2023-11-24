@@ -2,13 +2,21 @@
 
 import SidebarMenu from '@/components/SidebarMenu.jsx';
 import Main from '@/components/Main';
-import { useSelector } from "react-redux";
 import { getSelector } from '@/utils/helper';
+import { useDispatch } from 'react-redux';
+import { setShowLoginModal } from '@/slices/homeSlice';
+import { redirect } from 'next/navigation';
 
 const Page = () => {  
-
-  const showSidebar = useSelector(store=>store.homeSlice.sidebar);
+  const dispatch = useDispatch();
+  const showSidebar = getSelector('sidebar');
   const darkMode = getSelector('darkMode');
+  const userLoggedIn = getSelector('userLoggedIn');
+
+  if(!userLoggedIn) {
+    dispatch(setShowLoginModal(true));  
+    redirect('/');
+  };
   
   return (
     <div className='laptop:flex relative h-[100vh]'>

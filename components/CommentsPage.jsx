@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPosts,getComments, getSelector, getChannelInfo } from '@/utils/helper';
 import { setCommentPageData, setData } from '@/slices/homeSlice';
 import Loader from './Loader';
+import Link from 'next/link';
 import CommentsList from './CommentsList';
+
 const CommentsPage = ({id}) => {
   
   const dispatch= useDispatch();
@@ -43,7 +45,7 @@ const CommentsPage = ({id}) => {
             <div className='flex gap-1 items-center'>
               <img className='w-12 h-12 rounded-full' src={post?.author?.profileImage} />
               <span className='text-sm hover:underline cursor-pointer'>r/{post?.channel?.name}</span>
-              <span className='text-gray-400 text-sm'>Posted by <span className='text-blue-400 cursor-pointer hover:underline'>u/{post?.author?.name}</span> 2 days ago</span>
+              <span className='text-gray-400 text-sm'>Posted by <Link href={'u'}><span className='text-blue-400 cursor-pointer hover:underline'>u/{post?.author?.name}</span></Link> 2 days ago</span>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-sm'>{post?.content}</div>

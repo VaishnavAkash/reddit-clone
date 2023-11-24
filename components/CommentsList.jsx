@@ -1,27 +1,39 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
-const CommentsList = () => {
-  const comments = useSelector(store=>store.homeSlice.commentPageData.comments); 
-
-    // async function getData(){
-    //     const author = await getAuthor(); 
-    // }
+const Comment = ({comment}) => {
 
   return (
-    <div className='flex flex-col'>
-        {comments?.map(eItem=>{
-            return <div className='flex flex-col gap-2'>
-                <div className='flex gap-2 '>
-                    <img src={''} alt='logo' />
-                    <span>Name</span>
-                    <span>Date of Comment</span>
-                </div>
-                <div className='mr-4 border-l-[2px] pt-20 border-gray-400'>{eItem?.content}</div>
-            </div>
-        })}
-    </div>
-  )
-}
+    <div className="comment">
+      <div className="comment-header">
+        <p>{comment.content}</p>
+        <p>Author: {comment.author}</p>
+        {/* Display other comment details as needed */}
+      </div>
 
-export default CommentsList
+      {comment.children.length > 0 && (
+        <div className="nested-comments ml-8">
+          {/* Recursive call to display nested comments */}
+          {comment.children.map((childComment) => (
+            <Comment key={childComment._id} comment={childComment} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const CommentsList = () => {
+  const commentsArray = useSelector(store=>store.homeSlice.commentPageData.comments); 
+
+  return (
+    <div className="comment-container">
+      {/* Loop through top-level comments */}
+      {commentsArray.map((comment) => (
+        <Comment key={comment._id} comment={comment} />
+      ))}
+    </div>
+  );
+};
+
+export default CommentsList;

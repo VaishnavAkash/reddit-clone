@@ -14,12 +14,13 @@ import {IoMdNotificationsOutline} from 'react-icons/io';
 import {AiOutlineMessage} from 'react-icons/ai';
 import {AiOutlinePlus} from 'react-icons/ai';
 import {CiBullhorn} from 'react-icons/ci';
-import {GiPunchBlast} from 'react-icons/gi';
+import {GiFrostfire} from 'react-icons/gi';
 import { useSelector,useDispatch } from 'react-redux';
 import Link from 'next/link';
-import { setShowLoginModal , showSidebar } from '@/slices/homeSlice';
+import { setNavbarDropdown, setShowLoginModal , showSidebar } from '@/slices/homeSlice';
 import { LoggedInOptionsModal, NormalOptionsDropDown } from './CustomModals';
 import { RxHamburgerMenu } from "react-icons/rx";
+import { getSelector, notify } from '@/utils/helper';
 
 const Navbar = () => {
   const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
@@ -32,10 +33,16 @@ const LoggedInNavbar = () =>{
   const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
   const userDetails= useSelector(store=>store.homeSlice.userDetails);
   const darkMode = useSelector(store=>store.homeSlice.darkMode);
-
+  const showNavDropdown = getSelector('navbarDropdown'); 
+  
   function handleShowSidebar(){
     dispatch(showSidebar());
   }
+  
+  function showNavDropdownFunc(){
+    dispatch(setNavbarDropdown(true));
+  }
+
 
  return (
   <div className={`flex items-center text-sm justify-between w-full gap-4 px-8 py-[2px] fixed border-b-2 border-gray top-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} z-[100]`}>
@@ -61,23 +68,23 @@ const LoggedInNavbar = () =>{
         <AiOutlineMessage className='text-2xl cursor-pointer hover:text-blue-400'/>
         <IoMdNotificationsOutline className='text-2xl cursor-pointer hover:text-blue-400'/>
         <Link href='/createpost'><AiOutlinePlus className='text-2xl cursor-pointer hover:text-blue-400'/></Link>
-        <div className={`flex cursor-pointer  ${darkMode ? 'bg-black border-[1px] border-blue-400 hover:text-blue-400':'bg-gray-100 text-black'} items-center py-2 px-4 gap-2 rounded-full`}>
+        <div onClick={()=>notify('Feature coming soon...')} className={`flex cursor-pointer  ${darkMode ? 'bg-black border-[1px] border-blue-400 hover:text-blue-400':'bg-gray-100 text-black'} items-center py-2 px-4 gap-2 rounded-full`}>
           <CiBullhorn className='text-2xl'/>
           Advertise
          </div> 
     </div>
-    <div className={`flex w-[13%] justify-between items-center ps-2 cursor-pointer  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
+    <div onClick={showNavDropdownFunc} className={`flex w-[13%] justify-between items-center ps-2 cursor-pointer  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
       <div className='flex'>
       <Image src={UserLogo} priority={false} width={45} height={15} alt='user Logo'/>
         <div className=''>
-          <div>{userDetails?.data?.name}</div>
-          <div className='flex'><GiPunchBlast/> 13 Karma</div>
+          <div>{userDetails?.data?.name ? userDetails.data.name : 'User'}</div>
+          <div className='flex gap-1 items-center'><GiFrostfire className='text-orange-600'/> 13 Karma</div>
         </div>
       </div>
         <div className='flex items-center'>
           <BsChevronDown/>
         </div>
-        {userLoggedIn && <LoggedInOptionsModal/>}
+        {showNavDropdown && <LoggedInOptionsModal/>}
     </div>
   </div>
  )
@@ -88,9 +95,14 @@ const RegularNavbar = () =>{
   const dispatch = useDispatch();
   const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
   const darkMode = useSelector(store=>store.homeSlice.darkMode);
+  const showNavDropdown = getSelector('navbarDropdown'); 
+
+  function showNavDropdownFunc(){
+    // console.log(showNavDropdown);
+    dispatch(setNavbarDropdown(!showNavDropdown));
+  }
 
   function handleLogin(){
-    console.log('btn clc')
     dispatch(setShowLoginModal(true));
   }
 
@@ -100,7 +112,7 @@ const RegularNavbar = () =>{
   
 
   return (
-    <div className={`tablet:bg-red-200 laptop:flex items-center text-sm justify-between w-full gap-4 px-8 py-3 fixed border-b-2 border-gray top-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} z-[100] `}>
+    <div className={`laptop:flex items-center text-sm justify-between w-full gap-4 px-8 py-3 fixed border-b-2 border-gray top-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} z-[100] `}>
       <div className='w-[10rem] flex gap-4 items-center'>
         <RxHamburgerMenu onClick={handleShowSidebar} className='text-lg cursor-pointer'/>
         <Image className='cursor-pointer' priority={false} src={Logo} width={110} height={10} alt='reddit-logo'/>
@@ -117,10 +129,9 @@ const RegularNavbar = () =>{
           <div onClick={handleLogin} className='py-2 px-4 bg-red-500 text-white rounded-3xl cursor-pointer hover:bg-red-700'>
             Log In
           </div>
-          <div  className='flex relative items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
+          <div onClick={showNavDropdownFunc} className='flex relative items-center cursor-pointer text-lg px-2 py-2 hover:bg-gray-200 rounded-[100%]'>
             <PiDotsThreeBold />
-            {/* {!userLoggedIn && <NormalOptionsDropDown/>} */}
-            {!userLoggedIn && <LoggedInOptionsModal/>}
+            {showNavDropdown && <NormalOptionsDropDown/>}
           </div>
       </div>
     </div>

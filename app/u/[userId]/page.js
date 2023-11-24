@@ -26,7 +26,7 @@ const Page = ({params}) => {
         <SidebarMenu/>
       </div>}
       <div className={`${showSidebar ? 'w-[83%] px-16 py-4' : 'w-full px-8 py-4'} ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative left-56 top-16`}>
-        {params.channel ? <ChannelPage id={params.channel} /> : <Main />}
+        <ChannelPage id={params.userId} />
       </div>
     </div>
   )

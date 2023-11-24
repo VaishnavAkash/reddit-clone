@@ -1,38 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-{/* <div>
-
-// const [page,setPage] = useState(1);
-// const [postList,setPostList] = useState(posts);
-
-
-
-    // console.log('hello');
-
-        // async function getInfinitePost(){
-        //     setPage(prev=>prev+1);
-        //     const data = await getInfiniteScroll(page);
-        //     console.log(data);
-        //     console.log('hi im called')
-        //     setPostList(prev=>[...prev,data]);
-        // }
-
-        // const onScroll = ()=>{
-            //     if (
-                //         window.innerHeight + window.scrollY >= document.body.offsetHeight
-                //     ){getInfinitePost()}
-                //     else{
-                    //         console.log('not yet')
-                    //     }
-                    // }
-                    
-                    // useEffect(()=>{
-                        //     window.addEventListener('scroll',onScroll);
-                        //     return ()=> window.removeEventListener('scroll',onScroll);
-                        // },[page])
-                        </div> */}
-
-
 const initialState={
     userLoggedIn : false,
     darkMode : false,
@@ -43,10 +10,12 @@ const initialState={
     userDetails:{},
     showLoginModal: false,
     commentPageData:{},
+    viewOptionsDropdown: false,
+    navbarDropdown: false,
+    viewOptionsWidth: 'Card',
+    communityTheme: 'bg-rose-400',
 }
-
-
-                        
+                   
  const homeSlice = createSlice({
     name:'homeSlice',
     initialState,
@@ -65,7 +34,7 @@ const initialState={
         },
         setData: (state,action)=>{
             if(action.payload.posts){
-                state.postsData = action.payload.posts
+                state.postsData = [...state.postsData,...action.payload.posts];
             };
             if(action.payload.channels){
                 state.channelsData = action.payload.channels;
@@ -88,13 +57,30 @@ const initialState={
             if (action.payload.comments) {
               state.commentPageData.comments = action.payload.comments;
             }
-          }
+        },
+        setViewOptionsDropdown:(state,action)=>{
+            state.viewOptionsDropdown = action.payload;
+        },
+        setNavbarDropdown:(state,action)=>{
+            state.navbarDropdown = action.payload;
+        },
+        setViewOptionsWidth: (state,action)=>{
+            state.viewOptionsWidth = action.payload;
+        },
+        setCommunityTheme:(state,action)=>{
+            console.log(action.payload);
+            console.log(`bg-${action.payload}-400`);
+            state.communityTheme = `bg-${action.payload}-400`;
+        },
     }
 })
 
+
 export const {loginUser,logOutUser,showSidebar,
     expandChannel,setData,setUserDetails,
-    setShowLoginModal,setLightMode,setCommentPageData} = homeSlice.actions;
+    setShowLoginModal,setLightMode,setCommentPageData,
+    setViewOptionsDropdown,setNavbarDropdown,
+    setViewOptionsWidth,setCommunityTheme} = homeSlice.actions;
 
 export default homeSlice.reducer;
 

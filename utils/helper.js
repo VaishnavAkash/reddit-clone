@@ -2,8 +2,16 @@ import { API_INFINITE_SCROLL, API_POSTS, AUTHOR_API, COMMENTS_API } from "@/util
 import { API_COMMUNITIES } from "@/utils/constants";
 import { projectID } from "@/utils/constants";
 import { useSelector } from "react-redux";
+import { FcReddit } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 export const getSelector = (value) => useSelector(store=>store.homeSlice[value]);
+
+export const changeCommunityTheme = () =>{
+  const colors= ['red','green','blue','pink','voilet','orange','amber','lime','teal','rose','indigo'];
+  return colors[Math.floor(Math.random()*colors.length)];
+}
+
 export const getPosts= async(id='')=>{
     const res = await fetch(API_POSTS+id,{
         headers:{
@@ -11,9 +19,19 @@ export const getPosts= async(id='')=>{
         }
     })
     const data= await res.json();
-    console.log(data.data);
+
     return data.data; 
-  }
+}
+
+export const infiniteScrollPost = async(page)=>{
+    const res = await fetch(API_INFINITE_SCROLL+page,{
+      headers:{
+        projectID
+      }
+    })
+    const data = await res.json();
+    return data.data;
+}
 
 export const getChannels = async()=>{
   const res = await fetch(API_COMMUNITIES,{
@@ -60,13 +78,13 @@ export async function handleLoginUser(email,password){
     password,
     appType: 'reddit'
   })
-  })
+})
   const data = await res.json();
-  localStorage.setItem('reddit-token',data.token);
+  localStorage.setItem('reddit-token',data?.token);
+  localStorage.setItem('reddit-userId',data?.data?._id);
+  console.log(data);
   return data;
 }
-
-
 
 export async function handleSignUpUser(name,email,password){
   console.log('hi im inside')
@@ -85,6 +103,8 @@ export async function handleSignUpUser(name,email,password){
   })
   const data = await res.json();
   localStorage.setItem('reddit-token',data.token);
+  localStorage.setItem('reddit-userId',data._id);
+  console.log(data);
   return data;
 }
 
@@ -101,9 +121,9 @@ export const getComments= async(id)=>{
     const data= await res.json();
     console.log(data);
     return data.data; 
-  }
+}
 
-  export const getAuthor = async(id) =>{
+export const getAuthor = async(id) =>{
     const res = await fetch(AUTHOR_API+id,{
       headers:{
         Authorization: `Bearer ${localStorage.getItem('reddit-token')}`,
@@ -113,4 +133,31 @@ export const getComments= async(id)=>{
     const data = await res.json();
     console.log(data);
     return data.data;
+}
+
+
+export function notify(content='Feature coming soon...'){
+  toast(content, {
+    duration: 2500,
+    position: 'bottom-center',
+  
+    // Styling
+    style: {paddingLeft:'3rem',paddingRight:'3rem',},
+    className: 'w-fit',
+  
+    // Custom Icon
+    icon: <FcReddit className='text-2xl'/>,
+  
+    // Change colors of success/error/loading icon
+    iconTheme: {
+      primary: '#000',
+      secondary: '#fff',
+    },
+  
+    // Aria
+    ariaProps: {
+      role: 'status',
+      'aria-live': 'polite',
+    },
   }
+  )};
