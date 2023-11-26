@@ -4,7 +4,7 @@ import {useState,useEffect} from 'react';
 import {FcGallery} from 'react-icons/fc';
 import Image from 'next/image';
 import {HiOutlineLink} from 'react-icons/hi';
-import UserAvatar from '@/assets/userLogo.webp'
+import UserAvatar from '../assets/userLogo.webp'
 import {BsFire} from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {BsPatchCheckFill} from 'react-icons/bs';

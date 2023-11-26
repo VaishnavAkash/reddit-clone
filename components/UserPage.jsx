@@ -3,7 +3,7 @@ import React,{useState} from 'react'
 import {BsFire} from 'react-icons/bs';
 import { UserInfoModal, ViewOptionsModal } from './CustomModals';
 import Image from 'next/image';
-import UserAvatar from '@/assets/userLogo.webp'
+import UserAvatar from '../assets/userLogo.webp'
 import {FcGallery} from 'react-icons/fc';
 import {HiOutlineLink} from 'react-icons/hi';
 import { GiHamburgerMenu } from 'react-icons/gi';
