@@ -4,8 +4,10 @@ import SidebarMenu from '@/components/SidebarMenu.jsx';
 import { useDispatch } from "react-redux";
 import CommentsPage from '@/components/CommentsPage';
 import { getSelector } from '@/utils/helper';
-import { setShowLoginModal } from '@/slices/homeSlice';
+import { loginUser, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setShowLoginModal, setViewOptionsDropdown, setWidth } from '@/slices/homeSlice';
 import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 const Page = ({params}) => {  
   
@@ -13,14 +15,43 @@ const Page = ({params}) => {
   const showSidebar = getSelector('sidebar');
   const darkMode = getSelector('darkMode');
   const userLoggedIn = getSelector('userLoggedIn');
-
+  
   if(!userLoggedIn) {
     dispatch(setShowLoginModal(true));  
     redirect('/');
   };
 
+  const closeDropdowns = () =>{
+    dispatch(setViewOptionsDropdown(false));
+    dispatch(setNavbarDropdown(false));
+    dispatch(setNotificationModal(false));
+    dispatch(setOpenSearchModal(false));
+ }
+
+ const handleAutoLoginUser=async()=>{
+  if(localStorage.getItem('reddit-userId')){
+    dispatch(loginUser());
+  }
+}
+
+function resize(){
+  dispatch(setWidth(window.innerWidth));
+}
+
+useEffect(()=>{
+  resize();
+  window.addEventListener('resize',resize);
+  return ()=> window.removeEventListener('resize',resize);
+},[])
+
+  useEffect(()=>{
+    window.addEventListener('scroll',closeDropdowns);
+    handleAutoLoginUser();
+    return ()=> window.removeEventListener('scroll',closeDropdowns);
+  },[])
 
   return (
+    <>
     <div className={`laptop:flex relative h-full ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {showSidebar && <div className='w-[17%] fixed top-12'>
         <SidebarMenu/>
@@ -29,6 +60,8 @@ const Page = ({params}) => {
         <CommentsPage id={params.postId}/>
       </div>
     </div>
+    <Toaster/>
+    </>
   )
 }
 

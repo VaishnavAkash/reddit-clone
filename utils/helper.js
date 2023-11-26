@@ -1,19 +1,20 @@
-import { API_INFINITE_SCROLL, API_POSTS, AUTHOR_API, COMMENTS_API } from "@/utils/constants";
+import { API_INFINITE_SCROLL, API_MAX_POSTS, API_POSTS, AUTHOR_API, COMMENTS_API } from "@/utils/constants";
 import { API_COMMUNITIES } from "@/utils/constants";
 import { projectID } from "@/utils/constants";
 import { useSelector } from "react-redux";
 import { FcReddit } from "react-icons/fc";
 import toast from "react-hot-toast";
+import { headers } from "@/next.config";
 
 export const getSelector = (value) => useSelector(store=>store.homeSlice[value]);
 
 export const changeCommunityTheme = () =>{
-  const colors= ['red','green','blue','pink','voilet','orange','amber','lime','teal','rose','indigo'];
+  const colors= ['red','green','blue','pink','voilet','orange','aquamarine','lime','teal','indianred','indigo'];
   return colors[Math.floor(Math.random()*colors.length)];
 }
 
-export const getPosts= async(id='')=>{
-    const res = await fetch(API_POSTS+id,{
+export const getPosts= async()=>{
+    const res = await fetch(API_MAX_POSTS,{
         headers:{
             projectID
         }
@@ -21,6 +22,17 @@ export const getPosts= async(id='')=>{
     const data= await res.json();
 
     return data.data; 
+}
+
+export const getSinglePost = async(id)=>{
+  const res = await fetch(API_POSTS+id,{
+    headers:{
+        projectID
+    }
+})
+const data= await res.json();
+
+return data.data; 
 }
 
 export const infiniteScrollPost = async(page)=>{
@@ -54,14 +66,13 @@ export const getCarousel= async()=>{
 }
 
 export const getChannelInfo = async(name) =>{
-  console.log(name)
   const res = await fetch('https://academics.newtonschool.co/api/v1/reddit/channel/'+name,{
     headers:{
       projectID
     }
   });
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
   return data.data;
 }
 
@@ -119,7 +130,6 @@ export const getComments= async(id)=>{
         }
     })
     const data= await res.json();
-    console.log(data);
     return data.data; 
 }
 
@@ -131,7 +141,6 @@ export const getAuthor = async(id) =>{
       }
     })
     const data = await res.json();
-    console.log(data);
     return data.data;
 }
 
@@ -142,11 +151,11 @@ export function notify(content='Feature coming soon...'){
     position: 'bottom-center',
   
     // Styling
-    style: {paddingLeft:'3rem',paddingRight:'3rem',},
-    className: 'w-fit',
+    style: {paddingLeft:'2rem',paddingRight:'2rem',fontWeight:'bolder'},
+    className: 'w-[4rem]',
   
     // Custom Icon
-    icon: <FcReddit className='text-2xl'/>,
+    icon: <FcReddit className='text-3xl'/>,
   
     // Change colors of success/error/loading icon
     iconTheme: {
@@ -161,3 +170,29 @@ export function notify(content='Feature coming soon...'){
     },
   }
   )};
+
+  export function copyClipboardFunc(){
+    navigator.clipboard.writeText(window.location.href);
+    notify('Link Copied to Clipboard');
+  }
+
+  export  function handlePostShare(id){
+    navigator.clipboard.writeText(window.location.href+'r/'+id+'/comments/'+id);
+    notify('Path copied to clipboard');
+  }
+
+  // export const addComment = async (id, value) => {
+  //   const res = await fetch('https://academics.newtonschool.co/api/v1/reddit/comment/' + id, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Bearer ${localStorage.getItem('reddit-token')}`,
+  //       'projectID': projectID
+  //     },
+  //     body: JSON.stringify({
+  //       'content': value
+  //     })
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  // };
+  

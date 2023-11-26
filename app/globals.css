@@ -4,6 +4,11 @@
 
 
 /* scrollbar */
+
+html {
+  scroll-behavior: smooth;  
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -13,7 +18,7 @@
   }
   
   .modal-container::-webkit-scrollbar-thumb {
-    background-color: rgb(181, 189, 190); /* Set the color of the thumb */
+    background-color: rgb(39, 215, 238); /* Set the color of the thumb */
     border-radius: 6px; /* Optional: Round the corners of the thumb */
   }
   
@@ -145,3 +150,5 @@
       box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
     }
   }
+
+

@@ -7,10 +7,10 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'mobile' : '375px',
+      'mobile' : '389px',
       // => @media (min-width: 375px) { ... }
       
-      'tablet': '640px',
+      'tablet': '725px',
       // => @media (min-width: 640px) { ... }
 
       'laptop': '1024px',

@@ -23,20 +23,20 @@ const SidebarMenu=()=>{
       <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
         <Link href='/'>
-          <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg '>
+          <div className='flex cursor-pointer justify-start items-center tablet:gap-4 mobile:gap-2 px-4 py-2 rounded-lg '>
             <AiOutlineHome className='text-2xl'/>
             Home
           </div>
         </Link>
         <Link href='/popular'>
-          <div className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg '>
+          <div className='flex cursor-pointer tablet:gap-4 mobile:gap-2 justify-start items-center gap-4 px-4 py-2 rounded-lg '>
             <BsFillArrowUpRightCircleFill className='text-2xl'/>
             Popular
           </div>
         </Link>
       </div>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
-      <div onClick={()=>notify('Feature coming soon...')} className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg'>
+      <div onClick={()=>notify('Feature coming soon...')} className='flex mobile:text-sm tablet:text-md  mobile:gap-6 cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg'>
             <div className='flex justify-between w-full items-center '>
               <div className='flex gap-2 items-center'>
               <FiBarChart2 className='text-2xl'/>
@@ -45,7 +45,7 @@ const SidebarMenu=()=>{
             <BsChevronDown className=''/>
             </div>
           </div>
-          <div onClick={()=>notify('Feature coming soon...')} className='laptop:flex cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg'>
+          <div onClick={()=>notify('Feature coming soon...')} className='flex mobile:text-sm tablet:text-md cursor-pointer  mobile:gap-6 justify-start items-center gap-4 px-4 py-2 rounded-lg'>
             <div className='flex justify-between w-full items-center'>
               <div className='flex gap-2 items-center'>
               <MdHotelClass className='text-2xl'/>
@@ -54,7 +54,7 @@ const SidebarMenu=()=>{
             <BsChevronDown className=''/>
             </div>
           </div>
-          <div onClick={showMenuItems} className='laptop:flex flex-col cursor-pointer justify-start items-center gap-4 px-4 py-2 rounded-lg transform-gpu group'>
+          <div onClick={showMenuItems} className=' mobile:text-sm flex tablet:text-md flex-col cursor-pointer mobile:gap-6 justify-start items-center gap-4 px-4 py-2 rounded-lg transform-gpu group'>
             <div className='flex justify-between w-full items-center'>
               <div className='flex gap-2 items-center'>
               <MdGames className='text-2xl'/>

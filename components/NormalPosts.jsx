@@ -81,8 +81,8 @@ const NormalPosts = () => {
     <LoginForm/>
     </div> : (
     <div className={`laptop:flex text-sm ${viewOptionsWidth=='Card' ?'gap-8 px-8' :'px-4 gap-4'} py-8`}>
-      <div className='laptop:w-[70%] z-20 block' onClick={handleAuthUser}>
-        <div className="laptop:flex justify-between items-center relative bg-white py-2 px-4 rounded-lg">
+      <div className='laptop:w-[70%] z-20 block' >
+        <div className="flex justify-between items-center relative bg-white py-2 px-4 rounded-lg">
           <div>
             <Link href='/createpost'><div className="cursor-pointer border-[1px] py-2 font-semibold border-gray-400 px-4 rounded-full hover:bg-black hover:text-white">Create Post</div></Link>
           </div>
@@ -94,7 +94,7 @@ const NormalPosts = () => {
            {viewOptionsDropdown && <ViewOptionsModal/>}
           </div>
         </div>
-        <NormalPostsList posts={posts} page={page} infiniteLoader={infiniteLoader}/>
+        <NormalPostsList posts={posts} page={page} infiniteLoader={infiniteLoader} handleAuthUser={handleAuthUser}/>
       </div>
       {/* Right Channel Sidebar */}
         <ChannelList handleAuthUser={handleAuthUser} />

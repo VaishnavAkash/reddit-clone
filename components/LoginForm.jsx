@@ -7,6 +7,8 @@ import { useDispatch,useSelector } from "react-redux";
 import { loginUser, setShowLoginModal, setUserDetails } from "@/slices/homeSlice";
 import Loader,{LoginFormLoader} from "./Loader";
 import Link from 'next/link';
+import {auth,googleProvider,githubProvider} from '@/config.js';
+import { signInWithPopup } from "firebase/auth";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const LoginForm = () => {
         const data = await handleSignUpUser(name,email,password);
         if(data.status=='success') {
             dispatch(loginUser());
-            dispatch(setUserDetails(data));
+            dispatch(setUserDetails(data?.data?.user?.name));
             console.log('inside signup')
         }else{
             notify('Enter a Valid Email and Password')
@@ -37,12 +39,32 @@ const LoginForm = () => {
         if(data.status=='success'){
             console.log('inside login')
             dispatch(loginUser());
-            dispatch(setUserDetails(data));
+            dispatch(setUserDetails(data?.data?.name));
         }else{
             notify('Enter a Valid Email and Password')
         }
     }
     setSubmitBtnLoader(false);
+    }
+
+    function handleGoogleAuth(){
+        signInWithPopup(auth,googleProvider).then(res=>{
+            console.log('loggedInUser');
+            dispatch(loginUser());
+            dispatch(setUserDetails(res?.user?.displayName));
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+
+    function handleGithubAuth(){
+        signInWithPopup(auth,githubProvider).then(res=>{
+            console.log('loggedInUser');
+            dispatch(loginUser());
+            dispatch(setUserDetails(res?.user?.displayName));
+        }).catch(err=>{
+            console.log(err);
+        })
     }
 
     useEffect(()=>{
@@ -70,10 +92,10 @@ const LoginForm = () => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-3">
-                    <div  className="flex hover:bg-sky-100 items-center gap-3 cursor-pointer bg-gray-100 rounded-full text-black px-4 py-2 ">
+                    <div onClick={handleGoogleAuth} className="flex hover:bg-sky-100 items-center gap-3 cursor-pointer bg-gray-100 rounded-full text-black px-4 py-2 ">
                         <FcGoogle className="text-2xl"/> Continue with Google 
                     </div>
-                    <div className="flex hover:bg-sky-100 items-center gap-3 cursor-pointer bg-gray-100 rounded-full text-black px-4 py-2 ">
+                    <div onClick={handleGithubAuth} className="flex hover:bg-sky-100 items-center gap-3 cursor-pointer bg-gray-100 rounded-full text-black px-4 py-2 ">
                         <ImGithub className="text-2xl cursor-pointer"/> Continue with Github
                     </div>
                 </div>

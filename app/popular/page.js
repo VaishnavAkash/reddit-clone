@@ -1,10 +1,10 @@
 'use client';
-
+import { useEffect } from 'react';
 import SidebarMenu from '@/components/SidebarMenu.jsx';
 import Main from '@/components/Main';
 import { getSelector } from '@/utils/helper';
 import { useDispatch } from 'react-redux';
-import { setShowLoginModal } from '@/slices/homeSlice';
+import { loginUser, setNavbarDropdown, setNotificationModal, setShowLoginModal, setViewOptionsDropdown, setWidth } from '@/slices/homeSlice';
 import { redirect } from 'next/navigation';
 
 const Page = () => {  
@@ -14,9 +14,37 @@ const Page = () => {
   const userLoggedIn = getSelector('userLoggedIn');
 
   if(!userLoggedIn) {
-    dispatch(setShowLoginModal(true));  
+    dispatch(setShowLoginModal(true));
     redirect('/');
   };
+
+  const closeDropdowns = () =>{
+    dispatch(setViewOptionsDropdown(false));
+    dispatch(setNavbarDropdown(false));
+    dispatch(setNotificationModal(false));
+ }
+
+ const handleAutoLoginUser=async()=>{
+  if(localStorage.getItem('reddit-userId')){
+    dispatch(loginUser());
+  }
+}
+
+function resize(){
+  dispatch(setWidth(window.innerWidth));
+}
+
+useEffect(()=>{
+  resize();
+  window.addEventListener('resize',resize);
+  return ()=> window.removeEventListener('resize',resize);
+},[])
+
+  useEffect(()=>{
+    window.addEventListener('scroll',closeDropdowns);
+    handleAutoLoginUser();
+    return ()=> window.removeEventListener('scroll',closeDropdowns);
+  },[])
   
   return (
     <div className='laptop:flex relative h-[100vh]'>

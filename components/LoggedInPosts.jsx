@@ -4,7 +4,7 @@ import {useState,useEffect} from 'react';
 import {FcGallery} from 'react-icons/fc';
 import Image from 'next/image';
 import {HiOutlineLink} from 'react-icons/hi';
-import UserAvatar from '@/assets/userAvatar.webp'
+import UserAvatar from '@/assets/userLogo.webp'
 import {BsFire} from 'react-icons/bs';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {BsPatchCheckFill} from 'react-icons/bs';
@@ -17,21 +17,24 @@ import { getPosts,getCarousel, getSelector } from '@/utils/helper';
 import { ChannelDetails } from './ChannelPage';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './Loader';
-import { ViewOptionsModal } from './CustomModals';
+import { CreateCommunityModal, ViewOptionsModal } from './CustomModals';
 import {LoggedInPostsList} from './PostsList';
-import { setViewOptionsDropdown } from '@/slices/homeSlice';
+import { setCommunityModal, setData, setPostsArray, setViewOptionsDropdown, setWidth } from '@/slices/homeSlice';
 
 const LoggedInPosts = ({id=''}) =>{
 
     const dispatch = useDispatch();
     const [loader,setLoader] = useState(true);
-    const [post,setPost] = useState([]);
     const [carousel,setCarousel] = useState([]);
     const userLoggedIn = getSelector('userLoggedIn');
     const darkMode = getSelector('darkMode');
     const viewOptionsDropdown = getSelector('viewOptionsDropdown');
     const viewOptionsWidth = getSelector('viewOptionsWidth');
-
+    const communityTheme = getSelector('communityTheme');
+    const [currentActiveFilter,setCurrentActiveFilter] = useState('Hot');
+    const width = getSelector('width');
+    const isOnline = getSelector('isOnline');
+    const post = useSelector(store=>store.homeSlice.postsData);
 
     function handleViewMode(){
       dispatch(setViewOptionsDropdown(!viewOptionsDropdown));
@@ -39,9 +42,14 @@ const LoggedInPosts = ({id=''}) =>{
 
     async function getPostsFunc(){
       const data = await Promise.all([getPosts(),getCarousel()]);
-      setCarousel(data[0]);
-      setPost(data[1]);
+      setCarousel(data[1]);
+      dispatch(setData({posts:data[0]}));
+      dispatch(setPostsArray(data[0]));
       setLoader(false);
+    }
+
+    function changeCurrentActiveFilter(e){
+      setCurrentActiveFilter(e.target.innerText);
     }
 
     const scrollToTop = () => {
@@ -50,9 +58,18 @@ const LoggedInPosts = ({id=''}) =>{
         behavior: 'smooth',
       });
     };
+
+    function resize(){
+      dispatch(setWidth(window.innerWidth));
+    }
   
     useEffect(()=>{
       getPostsFunc();
+    },[])
+
+    useEffect(()=>{
+      window.addEventListener('resize',resize);
+      return ()=> window.removeEventListener('resize',resize);
     },[])
 
     if(loader) return <Loader/>;
@@ -76,15 +93,18 @@ const LoggedInPosts = ({id=''}) =>{
             <div className={`w-full gap-8 flex ${darkMode ? 'bg-black text-white': 'bg-white text-black'}`}>
               <div className='laptop:w-[60%] flex flex-col gap-6'>
                 <div className={`flex w-full justify-start  rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray`}>
-                    <Image src={UserAvatar} alt="userLogo" width={40} height={10} />
+                  <div className='relative py-1 px-1 bg-gray-400 rounded-full'>
+                    <Image src={UserAvatar} alt="userLogo" width={60} height={14} />
+                    {isOnline && <p className='bg-green-500 absolute bottom-[0.17rem] right-2 w-2 h-2 rounded-full'></p>}
+                  </div>
                     <Link className='w-full' href='/createpost'><input className='cursor-pointer border-2 border-gray w-full px-3 h-10 placeholder:text-black-200' placeholder='Create Post'/></Link>
-                    <FcGallery className='cursor-pointer text-3xl'/>
-                    <HiOutlineLink className='cursor-pointer text-2xl'/>
+                    <Link href='/createpost'><FcGallery className='cursor-pointer text-3xl'/></Link>
+                    <Link href='/createpost'><HiOutlineLink className='cursor-pointer text-2xl'/></Link>
                 </div>
                 <div className='flex w-full  rounded-lg justify-between items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray'>
                   <div className='flex gap-4'>
-                    <div className='flex items-center cursor-pointer gap-1 active:text-pink-400'><BsFire/> Hot</div>  
-                    <div className='flex items-center cursor-pointer gap-1 active:text-pink-500'><BsPatchCheckFill/>Latest</div>
+                    <div onClick={changeCurrentActiveFilter} style={currentActiveFilter=='Hot' ? {color:communityTheme}:{}} className='flex items-center cursor-pointer gap-1'><BsFire/> Hot</div>  
+                    <div onClick={changeCurrentActiveFilter} style={currentActiveFilter=='Latest' ? {color:communityTheme}:{}}  className='flex items-center cursor-pointer gap-1'><BsPatchCheckFill/>Latest</div>
                   </div>
                   <div className='cursor-pointer relative flex items-center px-4 py-2 rounded-full'>
                     <div onClick={handleViewMode} className="cursor-pointer flex items-center px-4 py-2 rounded-full gap-2 hover:bg-gray-300">
@@ -94,14 +114,14 @@ const LoggedInPosts = ({id=''}) =>{
                   {viewOptionsDropdown && <ViewOptionsModal/>}
                 </div>
                 </div>
-                <div className='flex w-full items-center '>
-                  <LoggedInPostsList post={post} />
+                <div className='flex w-full items-center'>
+                   <LoggedInPostsList />
                 </div>
               </div>
               <div className='laptop:w-[30%] flex justify-start flex-col gap-4'>
-                {window.location.pathname.includes('r/') ? <ChannelDetails/>:<PostsSidebar/>}
-                <div className='flex justify-center sticky top-[88%] pt-8'> 
-                  <button onClick={scrollToTop} className={` w-fit rounded-full flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
+                {width>=1024 && <div className='flex flex-col gap-5'>{window.location.pathname.includes('r/') ? <ChannelDetails id={id} />:<PostsSidebar/>}</div>}
+                <div className='flex justify-center laptop:sticky mobile:fixed laptop:top-[88%] mobile:top-[37rem] right-0 pt-8'> 
+                  <button onClick={scrollToTop} className={`w-fit rounded-full mobile:min-w-[2rem] mobile:text-sm laptop:text-md flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
                 </div>
               </div>
             </div>
@@ -110,11 +130,17 @@ const LoggedInPosts = ({id=''}) =>{
   }
 
   const PostsSidebar =()=>{
-    const darkMode = useSelector(store=>store.homeSlice.darkMode);
 
+    const dispatch = useDispatch();
+    const darkMode = getSelector('darkMode');
+    const communityModal = getSelector('communityModal');
+
+    function handleCommunityModal(){
+      dispatch(setCommunityModal(!communityModal));  
+    }
     return (
       <>
-      <div className={`w-full justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>
+      <div className={`w-full flex justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>
                   <div className='flex justify-start w-full gap-4 items-center'>
                     <Image src={premiumLogo} alt='Premium Logo'/>
                     <div>
@@ -122,9 +148,10 @@ const LoggedInPosts = ({id=''}) =>{
                       <div className='text-[12px]'>The best Reddit Experience</div>
                     </div>
                   </div>
-                  <div className='bg-red-500 text-center text-white w-full rounded-full py-1 px-2'>
+                  <Link href='/error' className='w-full'><div className='bg-red-500 text-center text-white w-full rounded-full py-1 px-2'>
                     Try Now
                   </div>
+                  </Link>
                   </div>
                   <div className={`w-full relative shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}  rounded-lg`}>
                       <Image src={redditBg} alt='redditBg' width='' height=''/>
@@ -137,8 +164,9 @@ const LoggedInPosts = ({id=''}) =>{
                         Come here to check in with your favorite communities.
                       </div>
                       <div className='flex flex-col w-full gap-2'>
-                        <div className='cursor-pointer bg-blue-700 text-white text-center px-4 py-2 rounded-full w-full hover:bg-transparent hover:text-blue-700 border-[1px] hover:border-blue-700'>Create Post</div>
-                        <div className={`cursor-pointer border-[1px] border-blue-900 text-center ${darkMode ? 'text-white' : 'text-gray-800'} px-4 py-2 rounded-full w-full hover:bg-blue-100 hover:text-black`}>Create Community</div>
+                        <Link href='/createpost'><div className='cursor-pointer bg-blue-700 text-white text-center px-4 py-2 rounded-full w-full hover:bg-transparent hover:text-blue-700 border-[1px] hover:border-blue-700'>Create Post</div></Link>
+                        <div onClick={handleCommunityModal} className={`cursor-pointer border-[1px] border-blue-900 text-center ${darkMode ? 'text-white' : 'text-gray-800'} px-4 py-2 rounded-full w-full hover:bg-blue-100 hover:text-black`}>Create Community</div>
+                        {communityModal && <div className='fixed top-[20%] left-[30%] z-50'><CreateCommunityModal/></div>}
                       </div>
                   </div> 
                   <div className={`w-full sticky top-16 shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg`}>
