@@ -21,7 +21,7 @@ export const LoggedInPostsList = () => {
   return (
     <div className='flex flex-col gap-8'>   
                   {post?.map((epost)=>{
-                    return <HigherOrderPostCard epost={epost} />
+                    return <HigherOrderPostCard key={epost?._id} epost={epost} />
                   })}
                   <div className='w-full text-center  text-sm text-gray-600'>You all caught up!</div>
                 </div>

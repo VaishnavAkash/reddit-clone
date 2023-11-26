@@ -12,7 +12,6 @@ import { FaBalanceScale } from "react-icons/fa";
 import { LiaEyeSolid } from "react-icons/lia";
 import { FaUserLarge } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-import userLogo from '@/assets/userLogo.webp';
 import userAvatar from '@/assets/userAvatar.webp';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -78,38 +77,9 @@ export const SideBarItems = () =>{
   )
 }
 
-export const UserInfoModal = ({name}) =>{
-  
-  return (
-    <>
-        <div>
-          <div className="flex items-center">
-            <Image className="w-12 h-12 rounded-full" src={userAvatar} width='' height='' alt='userLogo'/>
-            <span>u/{name}</span>
-          </div>
-          <div>
-            <Image className="w-44 h-52" src={userLogo} width='' height='' alt='User Avatar'/>
-            <div className="text-center text-lg">{name}</div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className='flex px-8 text-md text-gray-600 justify-between'>
-            <div>
-              12  <div>Posts</div>
-            </div>
-            <div>
-              25 <div>Karma</div>
-            </div>
-          </div>
-          <div className='w-full bg-blue-700 rounded-full text-white text-center py-2'>Follow</div>
-        </div>
-    </>
-  )
-}
+
 
 export const ToggleSwitch= ({onClick}) =>{
-
-  const isOnline = getSelector('isOnline');
 
   return <label className="relative inline-flex items-center cursor-pointer">
     <input type="checkbox" value="" className="sr-only peer"/>
