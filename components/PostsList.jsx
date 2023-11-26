@@ -34,8 +34,8 @@ const NormalPostsList = ({posts,infiniteLoader,page,handleAuthUser}) =>{
   // const [hoveredId,setHoveredId] = useState('');
 
   return <div className="laptop:py-6 mobile:py-1">
-          {posts?.map((post)=>{
-            return <NormalPostCard handleAuthUser={handleAuthUser} post={post} />
+          {posts?.map((post,idx)=>{
+            return <NormalPostCard key={idx} handleAuthUser={handleAuthUser} post={post} />
             })}
         {infiniteLoader && <div className='flex justify-center py-2 items-center'><InfiniteLoader/></div>}
         {page>=9 && !infiniteLoader && <div className='w-full text-center  text-sm text-gray-600'>You all caught up!</div>}

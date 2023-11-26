@@ -97,7 +97,7 @@ const NormalPosts = () => {
         <NormalPostsList posts={posts} page={page} infiniteLoader={infiniteLoader} handleAuthUser={handleAuthUser}/>
       </div>
       {/* Right Channel Sidebar */}
-        <ChannelList handleAuthUser={handleAuthUser} />
+        <ChannelList />
     </div>
   )
 }

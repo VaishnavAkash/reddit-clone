@@ -90,8 +90,8 @@ const UserPosts=()=>{
         No Posts Yet!   
     </div> : <div className={`w-full text-black flex flex-col gap-6 pb-6`}>
         <div className='flex flex-col gap-5'>
-        {posts?.map((post)=>{
-            return <div className='flex py-2 px-2 bg-gray-100 border-2 rounded-lg shadow-lg border-black flex-col w-full h-full'>
+        {posts?.map((post,idx)=>{
+            return <div key={idx} className='flex py-2 px-2 bg-gray-100 border-2 rounded-lg shadow-lg border-black flex-col w-full h-full'>
                 <div className='flex flex-col'>
                     <div className='text-sm text-gray-400'>{post?.time}</div>
                     <div>{post?.title}</div>

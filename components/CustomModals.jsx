@@ -282,8 +282,8 @@ export const CreateCommunityModal = ()=>{
         <div className="flex flex-col gap-2">
           <div>Community type</div>
           <div className="flex flex-col gap-1">
-            {communityDataArray?.map((item)=>{
-              return <div className="flex items-center gap-2"><input type='radio' name='select mode'/>{<item.icon/>}<span>{item?.name}</span><span>{item?.desc}</span></div>
+            {communityDataArray?.map((item,idx)=>{
+              return <div key={idx} className="flex items-center gap-2"><input type='radio' name='select mode'/>{<item.icon/>}<span>{item?.name}</span><span>{item?.desc}</span></div>
             })}
           </div>
         </div>
