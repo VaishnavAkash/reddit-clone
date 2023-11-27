@@ -18,6 +18,7 @@ const CreatePost = () => {
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
     const options = {  hour: '2-digit', minute: '2-digit' ,  second: '2-digit' };
+    const userDetails = getSelector('userDetails');
 
 
     function addUserPost(){
@@ -54,7 +55,7 @@ const CreatePost = () => {
                         {width>800 && <div className={`flex items-center cursor-not-allowed gap-2 px-3 py-1 ${darkMode?'text-white':'text-black'} rounded-full border-[1px] border-gray-400`}><IoAdd/>Flair</div>}
                     </div>
                     <div className='flex justify-end gap-4'>
-                        <Link href={`/u/${userPageDetails?.name}`}><div onClick={addUserPost} className={`px-3 py-1 rounded-full border-[1px] border-gray-400 hover:bg-blue-700 hover:text-white cursor-pointer ${darkMode?'text-white':'text-black'}`}>Post</div></Link>
+                        <Link href={`/u/${userDetails}`}><div onClick={addUserPost} className={`px-3 py-1 rounded-full border-[1px] border-gray-400 hover:bg-blue-700 hover:text-white cursor-pointer ${darkMode?'text-white':'text-black'}`}>Post</div></Link>
                     </div>
                     <div className='w-full h-32 flex flex-col px-8 justify-center bg-white rounded-lg shadow-md'>
                         <div className='flex gap-2'>

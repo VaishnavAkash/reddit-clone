@@ -91,7 +91,7 @@ const LoggedInNavbar = () =>{
     <div className='flex min-w-[25%] items-center gap-4'>
     <RxHamburgerMenu onClick={handleShowSidebar} className='text-3xl cursor-pointer'/>
         <Link href='/'><Image className='cursor-pointer' priority={false} src={WhiteLogo} width={110} height={10} alt='reddit-logo'/></Link>
-        {width>=1024 &&<div className={`cursor-pointer flex items-center gap-4 justify-between w-fit px-4 py-2 ${darkMode ? 'bg-black text-white':'bg-white text-black hover:bg-gray-50'}`}>
+        {width>=1024 &&<div onClick={handleShowSidebar} className={`cursor-pointer flex items-center gap-4 justify-between w-fit px-4 py-2 ${darkMode ? 'bg-black text-white':'bg-white text-black hover:bg-gray-50'}`}>
           <div className='flex items-center gap-2'>
           <AiFillHome className='text-xl'/>
             Home

@@ -4,8 +4,10 @@ import { expandChannel, setShowLoginModal } from '@/slices/homeSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import ChannelCard from './ChannelCard';
 import Link from 'next/link';
+import { getSelector } from '@/utils/helper';
 
 const ChannelList = () => {
+  const userLoggedIn = getSelector('userLoggedIn');
 
   function handleAuthUser(){
     if(userLoggedIn) dispatch(setShowLoginModal(false));

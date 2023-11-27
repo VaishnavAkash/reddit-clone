@@ -81,21 +81,30 @@ export const SideBarItems = () =>{
 
 export const ToggleSwitch= ({onClick}) =>{
 
-  return <label className="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" value="" className="sr-only peer"/>
-    <div onClick={onClick} className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+  return <label class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" value="" class="sr-only peer"/>
+    <div onClick={onClick} class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
   </label>
   
 }
 
+export const ToggleOnlineSwitch= ({onClick}) =>{
+  const isOnline = getSelector('isOnline');
+
+  return  <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer" checked={isOnline}/>
+  <div onClick={onClick} class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+</label>
+  
+}
 export const LoggedInOptionsModal = () =>{
 
 
   const dispatch = useDispatch();
   const userDetails = getSelector('userDetails');
-  const MenuData1 = [{name:'Offline Status',switch:ToggleSwitch},{name:'Profile'},{name:'Style Avatar',notify:()=>notify('Feature Coming Soon...')},{name:'User Settings',notify:()=>notify('Feature Coming Soon...')}];
+  const MenuData1 = [{name:'Online Status',switch:ToggleOnlineSwitch},{name:'Profile'},{name:'Style Avatar',notify:()=>notify('Feature Coming Soon...')},{name:'User Settings',notify:()=>notify('Feature Coming Soon...')}];
   const MenuData2= [{name:'Dark Mode',switch:ToggleSwitch}];
-  const MenuData3= [{icon:IoLogoReddit,name:'About Reddit',notify:()=>notify('Feature Coming Soon...')},{icon:IoIosHelpCircleOutline,name:'Help',notify:()=>notify('Feature Coming Soon...')},
+  const MenuData3= [{icon:IoLogoReddit,name:'About Reddit',notify:()=>notify('A Reddit Clone made by Akash...')},{icon:IoIosHelpCircleOutline,name:'Help',notify:()=>notify('Team Reddit Happy to Help you...')},
   {icon:MdMenuBook,name:'Blog',notify:()=>notify('Feature Coming Soon...')},{icon:TiMicrophone,name:'Press',notify:()=>notify('Feature Coming Soon...')},{icon:FaUsers,name:'Communities',notify:()=>notify('Feature Coming Soon...')},
   {icon:TbApps,name:'Topics',notify:()=>notify('Feature Coming Soon...')},{icon:MdOutlinePrivacyTip,name:'Content Policy',notify:()=>notify('Feature Coming Soon...')},{icon:FaBalanceScale,name:'Privacy Policy',notify:()=>notify('Feature Coming Soon...')},
   {icon:FaBalanceScale,name:'User Agreement',notify:()=>notify('Feature Coming Soon...')},{icon:IoMdExit,name:'Log Out',logOutUserFunc:{logOutUserFunc}}];
@@ -122,7 +131,7 @@ export const LoggedInOptionsModal = () =>{
       <div className="border-b-[2px] border-gray-200 py-4  flex flex-col gap-4">
         <div className="text-gray-300 text-md cursor-default flex items-center gap-2"> <FaUserLarge className="text-xl"/> My Stuff</div>
         <div>{MenuData1?.map((item,idx)=>{
-            return <Link key={idx} href={item.name=='Profile'?`u/${userDetails}`:''}><div className={`px-2 text-center flex items-center gap-2 cursor-pointer py-2 rounded-lg  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
+            return <Link key={idx} href={item.name=='Profile'?`/u/${userDetails}`:''}><div className={`px-2 text-center flex items-center gap-2 cursor-pointer py-2 rounded-lg  ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
                 {item.icon && <item.icon className="text-xl"/>}
                 <div onClick={item?.notify} className="flex justify-between w-full">
                   <div>{item.name}</div>
@@ -146,7 +155,7 @@ export const LoggedInOptionsModal = () =>{
         })}
         </div>
       </div>
-      <div className="flex flex-col gap-2">{MenuData3?.map((item,idx)=>{
+      <div className="flex flex-col gap-2 py-2">{MenuData3?.map((item,idx)=>{
            return <div onClick={item.notify ? ()=>notify('Feature coming soon...'):logOutUserFunc} key={idx} className={`px-2 flex items-center gap-2 cursor-pointer py-2 rounded-lg ${darkMode ? 'bg-black text-white hover:text-blue-400':'bg-white text-black hover:bg-gray-50'}`}>
                {item.icon && <item.icon className="text-xl"/>}
                <div className="flex justify-between w-full">
