@@ -79,12 +79,17 @@ const LoggedInPosts = ({id=''}) =>{
           <div className={`flex flex-col relative  ${viewOptionsWidth=='Card' ?'gap-8 px-8' :'px-4 gap-4'} py-8`}>
             {userLoggedIn && window.location.pathname.includes('popular') ? <div className='flex w-full h-52 gap-8 overflow-auto no-scrollbar'>
               {carousel?.map(((ecar,idx)=>{
-                return <Link key={ecar._id} href={`r/${ecar?._id}/comments/${ecar?._id}`}>
-                  <div className='w-[18rem] h-full relative'>
-                    <img className='w-full h-full rounded-lg  bg-gradient-to-t from-transparent to-black' src={`https://loremflickr.com/320/240?random=${idx+1}`} alt="" /> 
-                    <div className={`absolute bottom-5 px-4`}>
-                      <div className='text-white'>r/{ecar.channel.name}</div>
-                      <div className='text-white'>{ecar.content.slice(0,32)}...</div>
+                return   <Link key={ecar._id} href={`/r/${ecar?._id}/comments/${ecar?._id}`}>
+                <div className='w-[18rem] h-full relative'>
+                  {/* Gradient background layer */}
+                  <div className='absolute top-0 left-0 w-full h-full gradient-bg rounded-lg'></div>
+                  
+                  <img className='w-full h-full rounded-lg' src={`https://loremflickr.com/320/240?random=${idx+1}`} alt="" />
+                  
+                  {/* Text div at the bottom */}
+                  <div className='absolute bottom-5 px-4 left-0 w-full text-white'>
+                    <div>r/{ecar.channel.name}</div>
+                    <div>{ecar.content.slice(0, 27)}...</div>
                   </div>
                 </div>
               </Link>
@@ -118,8 +123,8 @@ const LoggedInPosts = ({id=''}) =>{
                    <LoggedInPostsList />
                 </div>
               </div>
-              <div className='laptop:w-[30%] flex justify-start flex-col gap-4'>
-                {width>=1024 && <div className='flex flex-col gap-5'>{window.location.pathname.includes('r/') ? <ChannelDetails id={id} />:<PostsSidebar/>}</div>}
+              <div className='laptop:w-[30%] flex justify-start flex-col gap-4 sticky top-20'>
+                {width>=1024 && <div className='flex relative flex-col gap-5'>{window.location.pathname.includes('r/') ? <ChannelDetails id={id} />:<PostsSidebar/>}</div>}
                 <div className='flex justify-center laptop:sticky mobile:fixed laptop:top-[88%] mobile:top-[37rem] right-0 pt-8'> 
                   <button onClick={scrollToTop} className={`w-fit rounded-full mobile:min-w-[2rem] mobile:text-sm laptop:text-md flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
                 </div>
@@ -134,13 +139,15 @@ const LoggedInPosts = ({id=''}) =>{
     const dispatch = useDispatch();
     const darkMode = getSelector('darkMode');
     const communityModal = getSelector('communityModal');
+    const languagesArray1 = ['English','Francais','Spanish'];
+    const languagesArray2 = ['Bengali','Marathi','Pubjabi'];
 
     function handleCommunityModal(){
       dispatch(setCommunityModal(!communityModal));  
     }
     return (
       <>
-      <div className={`w-full flex justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>
+      <div className={`w-full relative flex justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>
                   <div className='flex justify-start w-full gap-4 items-center'>
                     <Image src={premiumLogo} alt='Premium Logo'/>
                     <div>
@@ -169,6 +176,7 @@ const LoggedInPosts = ({id=''}) =>{
                         {communityModal && <div className='fixed top-[20%] left-[30%] z-50'><CreateCommunityModal/></div>}
                       </div>
                   </div> 
+                  {/* Sticky modal container */}
                   <div className={`w-full sticky top-16 shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg`}>
                     <div className='flex w-full  text-[0.8rem] border-b-[1px] border-gray'>
                       <div className='w-[40%] text-start'>
@@ -182,14 +190,10 @@ const LoggedInPosts = ({id=''}) =>{
                     </div>
                     <div className='flex text-[0.8rem] w-full  border-b-[1px] border-gray'>
                       <div className='w-[40%] text-start'>
-                        <div>English</div>
-                        <div>English</div>
-                        <div>English</div>
+                        {languagesArray1?.map((item,idx)=><div key={idx}>{item}</div>)}
                       </div>
                       <div className='w-[60%] text-start'>
-                        <div>English</div>
-                        <div>English</div>
-                        <div>English</div>
+                      {languagesArray2?.map((item,idx)=><div key={idx}>{item}</div>)}
                       </div>
                     </div>
                     <div className='text-sm'>

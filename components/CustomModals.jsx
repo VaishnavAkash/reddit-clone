@@ -12,7 +12,7 @@ import { FaBalanceScale } from "react-icons/fa";
 import { LiaEyeSolid } from "react-icons/lia";
 import { FaUserLarge } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-import userAvatar from '@/assets/userAvatar.webp';
+// import userAvatar from '@/assets/userAvatar.webp';
 import Image from 'next/image';
 import Link from 'next/link';
 import notificationLogo from '@/assets/notificationLogo.png';
@@ -25,7 +25,6 @@ import { RxCross1 } from "react-icons/rx";
 import LiveChat from "./LiveChat";
 import { FaLock } from "react-icons/fa";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 
 
 
@@ -77,12 +76,12 @@ export const SideBarItems = () =>{
   )
 }
 
-
-
 export const ToggleSwitch= ({onClick}) =>{
 
+  const darkMode = getSelector('darkMode');
+
   return <label class="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" value="" class="sr-only peer"/>
+    <input type="checkbox" checked={darkMode} value="" class="sr-only peer"/>
     <div onClick={onClick} class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
   </label>
   

@@ -14,7 +14,6 @@ const LiveChat = () => {
         const res = await fetch('https://type.fit/api/quotes');
         const data = await res.json();
         dispatch(setChatArray(data));
-        console.log(data);
     }
 
     useEffect(() => {

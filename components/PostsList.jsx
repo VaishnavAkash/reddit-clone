@@ -74,7 +74,7 @@ const NormalPostCard = ({post,handleAuthUser})=>{
         <div className="bg-blue-700 px-4 py-1 w-fit text-xs text-white rounded-full hover:bg-blue-800">Join</div>
       </div>
     </div>
-    <Link key={post._id} href={`r/${post?._id}/comments/${post?._id}`}>
+    <Link key={post._id} href={`/r/${post?._id}/comments/${post?._id}`}>
     <div className="text-[13px] font-normal">
       {post.content}
     </div>
@@ -83,7 +83,7 @@ const NormalPostCard = ({post,handleAuthUser})=>{
       <div className="flex items-center bg-gray-100 rounded-full text-xs font-semibold hover:bg-gray-200 py-2 px-2 gap-2">
         <BiUpvote className="text-xl cursor-pointer hover:text-red-600"/> {post?.likeCount} <BiDownvote className="text-xl cursor-pointer hover:text-blue-400"/>
       </div>
-      <Link key={post._id} href={`r/${post?._id}/comments/${post?._id}`}>
+      <Link key={post._id} href={`/r/${post?._id}/comments/${post?._id}`}>
       <div className='flex items-center bg-gray-100 cursor-pointer rounded-full hover:bg-gray-200 py-2 px-2 gap-2'><AiOutlineMessage className="text-xl cursor-pointer"/></div>
       </Link>
       <div onClick={()=>handlePostShare(post?._id)} className="flex items-center bg-gray-100 cursor-pointer rounded-full hover:bg-gray-200 py-2 px-2"><IoMdShareAlt className="text-xl"/> Share</div>
@@ -105,17 +105,17 @@ const LoginPostCard = ({epost,alreadyLiked,likes,increaseLike,decreaseLike})=>{
   <div className='py-4 gap-3 flex flex-col px-2'>
     <div className='flex text-[12px] gap-2 items-center'>
       <img className='w-9 h-9 rounded-full' src={epost?.channel?.image} />
-      {!window.location.href.includes('r/') && <Link href={`r/${epost?.channel?._id}`}><div className='hover:underline'>r/{epost?.channel?.name}</div></Link>}
+      {!window.location.href.includes('r/') && <Link href={`/r/${epost?.channel?._id}`}><div className='hover:underline'>r/{epost?.channel?.name}</div></Link>}
       <div className='text-gray-600'>Posted By <span>{epost?.author?.name}</span></div>
     </div>
-  <Link key={epost._id} href={`r/${epost?._id}/comments/${epost?._id}`}>
+  <Link key={epost._id} href={`/r/${epost?._id}/comments/${epost?._id}`}>
     <div className='text-sm w-full'>
       <div className='flex justify-center'><img className='w-full h-[30rem] rounded-lg px-2 pb-2' src={`https://loremflickr.com/320/320?cat=${Math.floor(Math.random()*50)}`} alt='post image'/></div>
       <div>{epost?.content}</div>
       </div>
     </Link>
     <div className='text-sm flex gap-4'>
-  <Link key={epost._id} href={!window.location.href.includes('r/') ? `r/${epost?._id}/comments/${epost?._id}` : `/comments/${epost?._id}`}>
+  <Link key={epost._id} href={!window.location.href.includes('r/') ? `/r/${epost?._id}/comments/${epost?._id}` : `/comments/${epost?._id}`}>
     <div className='flex gap-1 hover:bg-gray-100 px-3 py-1 rounded-full cursor-pointer'><AiOutlineMessage className='text-xl'/> {epost.commentCount} Comments</div>
   </Link>
     <div className='flex gap-1 hover:bg-gray-100 px-3 py-1 rounded-full cursor-pointer' onClick={()=>handlePostShare(epost?._id)}><IoMdShareAlt className='text-xl'/> Share</div>

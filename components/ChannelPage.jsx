@@ -8,11 +8,11 @@ import { useDispatch } from 'react-redux';
 import { setCommunityTheme, setCustomCommunity, setData } from '@/slices/homeSlice';
 import { ToggleSwitch } from './CustomModals';
 
-
 const ChannelPage = ({id}) => {
   
   const dispatch = useDispatch();
   const channelInfo = getSelector('channelsData');
+  const userDetails = getSelector('userDetails');
   const communityTheme = getSelector('communityTheme');
   const customCommunity = getSelector('customCommunity');
 

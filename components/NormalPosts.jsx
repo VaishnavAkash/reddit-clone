@@ -30,6 +30,8 @@ const NormalPosts = () => {
     const showLoginModal = getSelector('showLoginModal');
     const viewOptionsDropdown = getSelector('viewOptionsDropdown');
     const viewOptionsWidth = getSelector('viewOptionsWidth');
+    const prevPosts = getSelector('postsData');
+
   
 
     async function getData(){
@@ -59,8 +61,10 @@ const NormalPosts = () => {
 
     async function getInfinitePost(){
       const data = await infiniteScrollPost(page);
-      dispatch(setData({posts:data}));
+      dispatch(setData({posts:[...prevPosts,...data]}));
       setInfiniteLoader(false);
+      console.log(data);
+      console.log(page);
     }
 
     useEffect(()=>{
@@ -77,7 +81,7 @@ const NormalPosts = () => {
 
   if(loader) return <Loader/>;
 
-  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] z-40 h-[100%] fixed left-0 top-4 flex justify-center items-center'>
+  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] z-40 h-[100%] fixed left-0 top-4 flex justify-center items-center gradient-bg'>
     <LoginForm/>
     </div> : (
     <div className={`laptop:flex text-sm ${viewOptionsWidth=='Card' ?'gap-8 px-8' :'px-4 gap-4'} py-8`}>

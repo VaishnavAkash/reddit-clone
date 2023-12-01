@@ -21,8 +21,9 @@ const LoginForm = () => {
     const [loader,setLoader] = useState(true);
 
     async function handleSubmit(e){
-        setSubmitBtnLoader(true);
+
         e.preventDefault();
+        setSubmitBtnLoader(true);        
         console.log(email,password);
        if(currentForm) {
         const data = await handleSignUpUser(name,email,password);
@@ -112,7 +113,7 @@ const LoginForm = () => {
                     <input type='password' onChange={(e)=>setPassword(e.target.value)} value={password} className="flex items-center gap-3 cursor-pointer bg-gray-100 rounded-full text-black px-4 py-2 outline-blue-400" placeholder="Password"/>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <button type="submit" onClick={handleSubmit} className="w-full cursor-pointer m-auto text-center py-2 bg-red-500 rounded-full font-semibold text-white">{submitBtnLoader ? <LoginFormLoader/> : currentForm ? 'Sign Up':'Log In'}</button>
+                    <button type="submit" onClick={handleSubmit} className="w-full cursor-pointer m-auto text-center py-2 flex items-center justify-center bg-red-500 rounded-full font-semibold text-white">{submitBtnLoader ? <LoginFormLoader/> : currentForm ? 'Sign Up':'Log In'}</button>
                     <div className="w-fit m-auto text-sm">{currentForm ? 'Already a member? ':'New to Reddit? '}<span onClick={()=>setCurrentForm(prev=>!prev)} className="text-blue-600 cursor-pointer hover:underline">{!currentForm ? 'Sign Up':'Log In'}</span></div>
                 </div>
             </form>
