@@ -60,6 +60,7 @@ const ChannelPage = ({id}) => {
 }
 
 export const ChannelDetails=({id})=>{
+
   const dispatch = useDispatch();
   const channel = getSelector('channelsData');
   const darkMode = getSelector('darkMode');
@@ -72,7 +73,7 @@ export const ChannelDetails=({id})=>{
     dispatch(setCommunityTheme(color));
   }
 
-  
+  if(window.location.href.includes('comment')) return;
 
   return (
     <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
