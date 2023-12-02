@@ -8,6 +8,7 @@ import { loginUser, setNavbarDropdown, setNotificationModal, setOpenSearchModal,
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { ChatModal } from '@/components/CustomModals';
 
 const Page = ({params}) => {  
   
@@ -15,6 +16,7 @@ const Page = ({params}) => {
   const showSidebar = getSelector('sidebar');
   const darkMode = getSelector('darkMode');
   const userLoggedIn = getSelector('userLoggedIn');
+  const showMessageModal = getSelector('messageModal');
   
   if(!userLoggedIn) {
     dispatch(setShowLoginModal(true));  
@@ -60,6 +62,7 @@ useEffect(()=>{
         <CommentsPage id={params.postId}/>
       </div>
     </div>
+    {showMessageModal && <ChatModal/>}
     <Toaster/>
     </>
   )

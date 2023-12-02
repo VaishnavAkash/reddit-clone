@@ -8,6 +8,7 @@ import { loginUser, setNavbarDropdown, setNotificationModal, setOpenSearchModal,
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import UserPage from '@/components/UserPage';
+import { ChatModal } from '@/components/CustomModals';
 
 const Page = ({params}) => {  
 
@@ -15,6 +16,7 @@ const Page = ({params}) => {
   const showSidebar = useSelector(store=>store.homeSlice.sidebar);
   const darkMode = getSelector('darkMode');
   const userLoggedIn = getSelector('userLoggedIn');
+  const showMessageModal = getSelector('messageModal');
 
   if(!userLoggedIn) {
     dispatch(setShowLoginModal(true));
@@ -61,6 +63,7 @@ useEffect(()=>{
         <UserPage id={params.userId} />
       </div>
     </div>
+    {showMessageModal && <ChatModal/>}
     <Toaster/>
     </>
   )
