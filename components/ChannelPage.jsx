@@ -24,10 +24,15 @@ const ChannelPage = ({id}) => {
     else return;
   }
 
+  function clearCustomCommunity(){
+    dispatch(setCustomCommunity({name:''}));
+  }
  
   useEffect(()=>{
     if(window.location.pathname.includes('r/') && id!='customCommunity') getChannelData();
     else return;
+
+    return ()=>clearCustomCommunity();
   },[]);
 
 
@@ -38,12 +43,12 @@ const ChannelPage = ({id}) => {
             <div className='bg-white w-full  h-[60%] flex gap-6 px-4'>
               {/* channel Logo */}
               <div className='relative w-20 h-20 rounded-full'>
-                <img src={channelInfo?.image|| `https://loremflickr.com/320/240?random=${Math.floor(Math.random()*10)}`} className='w-full h-full rounded-full border-2 absolute bottom-6 border-white' alt='channel Logo'/>
+                <img src={channelInfo?.image || `https://loremflickr.com/320/240?random=${Math.floor(Math.random()*10)}`} className='w-full h-full rounded-full border-2 absolute bottom-6 border-white' alt='channel Logo'/>
               </div>
               {/* Channel details */}
               <div >
-                <div onClick={copyClipboardFunc} className='cursor-pointer text-2xl flex items-center gap-4'>{channelInfo?.name || customCommunity?.name}<span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
-                <div className='text-gray-600 text-sm'>r/{channelInfo?.name || customCommunity?.name}</div>
+                <div onClick={copyClipboardFunc} className='cursor-pointer text-2xl flex items-center gap-4'>{customCommunity?.name || channelInfo?.name}<span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
+                <div className='text-gray-600 text-sm'>r/{customCommunity?.name || channelInfo?.name}</div>
               </div>
             </div>
         </div>
@@ -67,9 +72,7 @@ export const ChannelDetails=({id})=>{
     dispatch(setCommunityTheme(color));
   }
 
-  function handleCommunityDesc(){
-    dispatch(setCustomCommunity({description:communityDesc}));
-  }
+  
 
   return (
     <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
@@ -79,7 +82,7 @@ export const ChannelDetails=({id})=>{
         <div>
           <div className='flex items-center gap-6'>
             <img className='w-12 h-12 rounded-full' src={channel?.image || `https://loremflickr.com/320/240?random=${Math.floor(Math.random()*10)}`} width='' height='' alt='channel Description Logo'/>
-            <div className='text-sm'>r/{channel?.name || customCommunity?.name}</div>
+            <div className='text-sm'>r/{customCommunity?.name || channel?.name}</div>
           </div>
           {!id=='customCommunity' ? <div className='text-sm text-gray-500'>{channel?.description}</div> : <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque, eius.</div>}
           <div className='flex items-center gap-4'><LuCakeSlice/> <span className='text-gray-500'>Created Mon Aug 21 2023</span> </div>

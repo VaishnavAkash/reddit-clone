@@ -1,13 +1,19 @@
 import { pushAuthorDetails } from '@/slices/homeSlice';
+import { memo } from 'react';
 import { getSelector } from '@/utils/helper';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const Comment = ({comment,author}) => {
 
-const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-const readableDateTime = new Date().toLocaleString('en-US', options);
+const timestampStr = comment?.createdAt || new Date();
+const timestampDate = new Date(timestampStr);
+const hour = timestampDate.getUTCHours();
+const minute = timestampDate.getUTCMinutes();
+const day = timestampDate.getUTCDate();
+const year = timestampDate.getUTCFullYear();
 
+const readableDateTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}, ${day.toString().padStart(2, '0')}/${year}`;
 
   return (
     <div className="flex flex-col gap-3">
@@ -37,7 +43,7 @@ const readableDateTime = new Date().toLocaleString('en-US', options);
   );
 };
 
-const CommentsList = () => {
+const CommentsList = memo(function CommentsList() {
   const commentsArray = useSelector(store=>store.homeSlice.commentPageData.comments);
   const namesArray = getSelector('namesArray');
   
@@ -46,10 +52,11 @@ const CommentsList = () => {
     <div className="comment-container">
       {/* Loop through top-level comments */}
       {commentsArray?.map((comment,idx) => {
+        console.log(comment);
         return <Comment key={comment._id} comment={comment} author={namesArray[idx]} />
 })}
     </div>
   );
-};
+});
 
 export default CommentsList;

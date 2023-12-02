@@ -103,8 +103,8 @@ const LoggedInNavbar = () =>{
     </div>
     <div className='flex relative items-center cursor-pointer w-[80rem] min-w-[50%] justify-start gap-4'>
       <form onSubmit={handleRenderPost} onClick={handleOpenChatModal} className={`flex relative items-center w-[70%] py-2 px-4 bg-gray-200 ${openSearchModal?'rounded-t-3xl':'rounded-full'} gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400`}>
-        <GoSearch className='text-2xl'/>
-        <input className='w-[100%] bg-transparent outline-none' placeholder='Search Reddit'/>
+        <GoSearch className='text-2xl text-black'/>
+        <input className='w-[100%] bg-transparent outline-none text-black' placeholder='Search Reddit'/>
         {openSearchModal && <SearchModal/>}
       </form>
         {width>=1024 && <Link href='/popular'><BsArrowRightCircle className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}

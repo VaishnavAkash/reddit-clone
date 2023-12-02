@@ -58,18 +58,18 @@ const CommentsPage = ({id}) => {
         <div className='laptop:w-[60%] flex flex-col  gap-3'>
           {/* post desc */}
           <div className='flex'>
-          <div className='bg-gray-400 rounded-l-lg w-fit px-3 py-2'><BiUpvote/> {post?.commentCount} <BiDownvote/></div>
+          <div className='bg-gray-400 rounded-l-lg w-fit px-3 py-4'></div>
           <div className='flex flex-col gap-8 shadow-lg rounded-r-lg px-2 py-2'>
             <div className='flex gap-1 items-center'>
               <img className='w-12 h-12 rounded-full' src={post?.author?.profileImage} />
               <Link href={`/r/${post?._id}`}><span className='text-sm hover:underline cursor-pointer'>r/{post?.channel?.name}</span></Link>
-              <span className='text-gray-400 text-sm'>Posted by <Link href={`/u/${post?._id}`}><span className='text-blue-400 cursor-pointer hover:underline'>u/{post?.author?.name}</span></Link> 2 days ago</span>
+              <span className='text-gray-400 text-sm'>Posted by <span className='text-blue-400'>u/{post?.author?.name}</span> 2 days ago</span>
             </div>
             <div className='flex flex-col gap-1'>
               <div className='text-sm'>{post?.content}</div>
               <div className='text-gray-400 flex items-center'><BiCommentDetail className='text-xl'/> Comments</div>
               <div className='text-sm'>Comment as <span className='text-blue-400 text-sm'>{!userDetails?.data?.name ? 'User': userDetails.data.name}</span></div>
-              <textarea value={comment} onChange={(e)=>setComment(e.target.value)} className={` ${darkMode ? 'text-white':'text-black'} border-[1px] px-3 py-2 border-black $ w-full h-44`}  placeholder='What are your thoughts'></textarea>
+              <textarea value={comment} onChange={(e)=>setComment(e.target.value)} className={`text-black border-[1px] px-3 py-2 border-black $ w-full h-44`}  placeholder='What are your thoughts'></textarea>
               <div className='flex justify-end w-full h-10 rounded-sm items-center px-2 bg-gray-600'><span onClick={()=>handleAddComment(post?._id,comment)} className='bg-blue-300 cursor-pointer h-fit w-fit px-2 py-1 rounded-full'>Comment</span></div>
             </div>
           </div>

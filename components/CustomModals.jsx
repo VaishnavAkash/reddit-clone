@@ -318,7 +318,7 @@ export const SearchModal=()=>{
   const postsData = getSelector('postsData');
   const iterableArray = postsData.slice(0,4);
 
-  return <section className="absolute modal-container left-0 rounded-b-lg top-[2.5rem] w-full h-[30rem] overflow-y-scroll bg-white z-30 flex flex-col px-2 py-2">
+  return <section className="absolute modal-container text-black left-0 rounded-b-lg top-[2.5rem] w-full h-[30rem] overflow-y-scroll bg-white z-30 flex flex-col px-2 py-2">
     <div className="text-xl font-bold">Trending Today</div>
     <div>
       {iterableArray?.map((data,idx)=>{
