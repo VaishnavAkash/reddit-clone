@@ -98,7 +98,7 @@ const LoggedInPosts = ({id=''}) =>{
             <div className={`w-full gap-8 flex ${darkMode ? 'bg-black text-white': 'bg-white text-black'}`}>
               <div className='laptop:w-[60%] flex flex-col gap-6'>
                 <div className={`flex w-full justify-start  rounded-lg items-center gap-4 shadow-md border-[1px] px-2 py-4 border-gray`}>
-                  <div className='relative py-1 px-1 bg-gray-400 rounded-full'>
+                  <div className='relative py-1 px-1 bg-gray-300 rounded-full'>
                     <Image src={UserAvatar} alt="userLogo" width={60} height={14} />
                     {isOnline && <p className='bg-green-500 absolute bottom-[0.17rem] right-2 w-2 h-2 rounded-full'></p>}
                   </div>
@@ -123,8 +123,8 @@ const LoggedInPosts = ({id=''}) =>{
                    <LoggedInPostsList />
                 </div>
               </div>
-              <div className='laptop:w-[30%] flex justify-start flex-col gap-4 sticky top-20'>
-                {width>=1024 && <div className='flex relative flex-col gap-5'>{window.location.pathname.includes('r/') ? <ChannelDetails id={id} />:<PostsSidebar/>}</div>}
+              <div className='laptop:w-[30%] flex justify-start flex-col gap-4 top-20'>
+                {width>=1024 && window.location.pathname.includes('r/') ? <ChannelDetails id={id}/> : <PostsSidebar/>}
                 <div className='flex justify-center laptop:sticky mobile:fixed laptop:top-[88%] mobile:top-[37rem] right-0 pt-8'> 
                   <button onClick={scrollToTop} className={`w-fit rounded-full mobile:min-w-[2rem] mobile:text-sm laptop:text-md flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
                 </div>
@@ -177,7 +177,7 @@ const LoggedInPosts = ({id=''}) =>{
                       </div>
                   </div> 
                   {/* Sticky modal container */}
-                  <div className={`w-full sticky top-16 shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg`}>
+                  <div className={`w-full sticky top-[4.5rem] shadow-md border-[1px] px-2 py-4 border-gray text-sm flex flex-col items-center gap-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg`}>
                     <div className='flex w-full  text-[0.8rem] border-b-[1px] border-gray'>
                       <div className='w-[40%] text-start'>
                         <div>User Agreement</div>

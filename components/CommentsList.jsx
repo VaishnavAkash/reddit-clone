@@ -52,7 +52,6 @@ const CommentsList = memo(function CommentsList() {
     <div className="comment-container">
       {/* Loop through top-level comments */}
       {commentsArray?.map((comment,idx) => {
-        console.log(comment);
         return <Comment key={comment._id} comment={comment} author={namesArray[idx]} />
 })}
     </div>

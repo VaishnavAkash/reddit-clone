@@ -111,12 +111,16 @@ const initialState={
     postsArray:[],
     userPageDetails: {name:'',posts:[]},
     userPosts:[],
+    liveChatArray:[]
 }
                    
  const homeSlice = createSlice({
     name:'homeSlice',
     initialState,
     reducers:{
+        setLiveChatArray:(state,action)=>{
+            state.liveChatArray = [action.payload,...state.liveChatArray];
+        },
         setUserPosts:(state,action)=>{
             state.userPosts = action.payload;
         },
@@ -225,7 +229,7 @@ export const {loginUser,logOutUser,showSidebar,
     setNotificationModal,setMiniMessageModal,setWidth,
     setCommunityModal,setCommentsMapper,setCustomCommunity,
     setOpenSearchModal,setIsOnline,setChatArray,setPostsArray,
-    setUserPageDetails,setUserPosts} = homeSlice.actions;
+    setUserPageDetails,setUserPosts,setLiveChatArray} = homeSlice.actions;
 
 export default homeSlice.reducer;
 

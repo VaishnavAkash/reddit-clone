@@ -1,14 +1,15 @@
-import { setChatArray } from '@/slices/homeSlice';
+import { setChatArray, setLiveChatArray } from '@/slices/homeSlice';
 import { getSelector } from '@/utils/helper';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 const LiveChat = () => {
-
+    const liveChatArray = getSelector('liveChatArray');
     const dispatch = useDispatch();
     const options = {  hour: '2-digit', minute: '2-digit' };
     const chatArray = getSelector('chatArray');
     const chatDivRef = useRef(null); 
+    const arrayLengthRef = useRef(0);
 
     async function getQuote() {
         const res = await fetch('https://type.fit/api/quotes');
@@ -20,6 +21,17 @@ const LiveChat = () => {
         getQuote();
     }, []);
 
+    useEffect(()=>{
+        
+        const key = setInterval(()=>{
+            if(arrayLengthRef.current==13) {arrayLengthRef.current = 0};
+            dispatch(setLiveChatArray(chatArray[arrayLengthRef.current]));
+            arrayLengthRef.current = arrayLengthRef.current+1;
+        },2000);
+
+        return ()=> clearInterval(key);
+    },[chatArray])
+
     useEffect(() => {
         if (chatDivRef.current) {
           chatDivRef.current.scrollTop = chatDivRef.current.scrollHeight;
@@ -28,9 +40,9 @@ const LiveChat = () => {
 
 
     return (
-        <div ref={chatDivRef} className='flex modal-container flex-col w-full overflow-y-auto h-[20rem]'>
-            {chatArray.length > 0 &&
-                chatArray.map((item,idx) => {
+        <div ref={chatDivRef} className='flex modal-container flex-col-reverse w-full overflow-y-auto h-[20rem]'>
+            {liveChatArray.length > 0 &&
+                liveChatArray.map((item,idx) => {
                     return <div key={item?.id || idx}>
                         <div className='flex gap-2 items-center'>
                             <img

@@ -27,8 +27,11 @@ const CommentsPage = ({id}) => {
   async function getData(){
     const [post,comments] = await Promise.all([getSinglePost(id),getComments(id)]);
     dispatch(setCommentPageData({post,comments}));
-    const channels = await getChannelInfo(post?._id);
-    dispatch(setData({channels}));  
+    console.log(post);
+    console.log(comments);
+    const channels = await getChannelInfo(post?.channel?._id);
+    dispatch(setData({channels}));
+    console.log(channels);
     setLoader(false);
   }
 
@@ -37,10 +40,16 @@ const CommentsPage = ({id}) => {
   },[])
 
   const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight+9999,
-      behavior: 'smooth',
-    });
+    const fullHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+
+    const key = setTimeout(()=>{
+      window.scrollTo({
+        top: fullHeight,
+        behavior: 'smooth',
+      });
+    },500);
+
+   return ()=>clearTimeout(key);
   };
 
   function handleAddComment(id,value){
@@ -68,7 +77,7 @@ const CommentsPage = ({id}) => {
             <div className='flex flex-col gap-1'>
               <div className='text-sm'>{post?.content}</div>
               <div className='text-gray-400 flex items-center'><BiCommentDetail className='text-xl'/> Comments</div>
-              <div className='text-sm'>Comment as <span className='text-blue-400 text-sm'>{!userDetails?.data?.name ? 'User': userDetails.data.name}</span></div>
+              <div className='text-sm'>Comment Below :</div>
               <textarea value={comment} onChange={(e)=>setComment(e.target.value)} className={`text-black border-[1px] px-3 py-2 border-black $ w-full h-44`}  placeholder='What are your thoughts'></textarea>
               <div className='flex justify-end w-full h-10 rounded-sm items-center px-2 bg-gray-600'><span onClick={()=>handleAddComment(post?._id,comment)} className='bg-blue-300 cursor-pointer h-fit w-fit px-2 py-1 rounded-full'>Comment</span></div>
             </div>

@@ -48,8 +48,8 @@ const UserPage = ({id}) => {
                   </div>
                   {/* Channel details */}
                   <div >
-                    <div onClick={copyClipboardFunc} className='cursor-pointer text-2xl flex items-center gap-4'>{id}<span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
-                    <div className='text-gray-600 text-sm'>r/{userPageDetails?.name}</div>
+                    <div onClick={copyClipboardFunc} className='cursor-pointer text-2xl flex text-black items-center gap-4'>{id}<span className='bg-blue-500 text-sm rounded-full text-white px-4 py-1'>Share</span></div>
+                    <div className='text-gray-600 text-sm'>u/{userPageDetails?.name}</div>
                   </div>
                 </div>
             </div>

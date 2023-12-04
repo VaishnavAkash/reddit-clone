@@ -16,7 +16,7 @@ import { IoMdExit } from "react-icons/io";
 import Image from 'next/image';
 import Link from 'next/link';
 import notificationLogo from '@/assets/notificationLogo.png';
-import { logOutUser, setChatArray, setCommunityModal, setCustomCommunity, setIsOnline, setLightMode, setMessageModal, setMiniMessageModal, setShowLoginModal, setViewOptionsWidth } from "@/slices/homeSlice";
+import { logOutUser, setChatArray, setCommunityModal, setCustomCommunity, setIsOnline, setLightMode, setLiveChatArray, setMessageModal, setMiniMessageModal, setShowLoginModal, setViewOptionsWidth } from "@/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getSelector, notify } from "@/utils/helper";
 import { IoSend } from "react-icons/io5";
@@ -76,6 +76,7 @@ export const SideBarItems = () =>{
   )
 }
 
+
 export const ToggleSwitch= ({onClick}) =>{
 
   const darkMode = getSelector('darkMode');
@@ -96,6 +97,16 @@ export const ToggleOnlineSwitch= ({onClick}) =>{
 </label>
   
 }
+
+export const ToggleSwitchPosts= ({onClick}) =>{
+
+  return  <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer"/>
+  <div onClick={onClick} class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+</label>
+  
+}
+
 export const LoggedInOptionsModal = () =>{
 
 
@@ -220,11 +231,11 @@ export const ChatModal = () =>{
 
   function handleAddChat(e){
     e.preventDefault();
-    dispatch(setChatArray([...chatArray,{author:userDetails,text:chatValue}]));
+    dispatch(setLiveChatArray({author:userDetails,text:chatValue}));
     setChatValue('');
   }
 
-  return miniMessageModal ? <div onClick={changeMessageMode} className="flex justify-between items-center hover:bg-gray-100 cursor-pointer fixed laptop:top-[41rem] mobile:top-[41.3rem] right-24 bg-white text-black h-[2rem] border-[2px] border-gray-300 w-[7rem] rounded-lg px-2 z-50">Chat <RxCross1 onClick={closeMessageModal} className="cursor-pointer"/></div> : 
+  return miniMessageModal ? <div onClick={changeMessageMode} className="flex justify-between items-center hover:bg-gray-100 cursor-pointer fixed laptop:top-[41rem] mobile:top-[41.3rem] text-black right-24 bg-white h-[2rem] border-[2px] border-gray-300 w-[7rem] rounded-lg px-2 z-50">Chat <RxCross1 onClick={closeMessageModal} className="cursor-pointer"/></div> : 
   <section className={`flex fixed laptop:top-[14.6rem] right-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} h-[28.8rem] border-[2px] border-gray-300 laptop:w-[50rem] tablet:w-[40rem] mobile:w-[30rem] z-50`}>
             <div className="laptop:w-[17rem] tablet:w-[12rem] mobile:w-[8rem] gap-10 border-e-2 border-gray-200">
               <div className="px-2 py-3">Chats</div>

@@ -107,11 +107,11 @@ const LoggedInNavbar = () =>{
         <input className='w-[100%] bg-transparent outline-none text-black' placeholder='Search Reddit'/>
         {openSearchModal && <SearchModal/>}
       </form>
-        {width>=1024 && <Link href='/popular'><BsArrowRightCircle className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
-        <AiOutlineMessage onClick={handleMessageModal} className='text-3xl cursor-pointer hover:text-blue-400'/>
-        <IoMdNotificationsOutline onClick={handleNotificationModal} className='text-4xl cursor-pointer hover:text-blue-400'/>
-        {width>=1024 && <Link href='/createpost'><AiOutlinePlus className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
-        {width>=1024 && <div onClick={()=>notify('Feature coming soon...')} className={`flex cursor-pointer  ${darkMode ? 'bg-black border-[1px] border-blue-400 hover:text-blue-400':'bg-gray-100 text-black'} items-center py-2 px-4 gap-2 rounded-full`}>
+        {width>=854 && <Link href='/popular'><BsArrowRightCircle className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
+        <AiOutlineMessage onClick={handleMessageModal} className='text-[1.8rem] cursor-pointer hover:text-blue-400'/>
+        <IoMdNotificationsOutline onClick={handleNotificationModal} className='text-[1.9rem] cursor-pointer hover:text-blue-400'/>
+        {width>=854 && <Link href='/createpost'><AiOutlinePlus className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
+        {width>=1280 && <div onClick={()=>notify('Feature coming soon...')} className={`flex cursor-pointer  ${darkMode ? 'bg-black border-[1px] border-blue-400 hover:text-blue-400':'bg-gray-100 text-black'} items-center py-2 px-4 gap-2 rounded-full`}>
           <CiBullhorn className='text-2xl'/>
           Advertise
          </div>}

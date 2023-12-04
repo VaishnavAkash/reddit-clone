@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { changeCommunityTheme, copyClipboardFunc, getAuthor, getChannelInfo, getSelector } from '@/utils/helper';
 import { useDispatch } from 'react-redux';
 import { setCommunityTheme, setCustomCommunity, setData } from '@/slices/homeSlice';
-import { ToggleSwitch } from './CustomModals';
+import { ToggleSwitchPosts } from './CustomModals';
 
 const ChannelPage = ({id}) => {
   
@@ -20,6 +20,7 @@ const ChannelPage = ({id}) => {
     if(id!=userDetails){
       const data = await getChannelInfo(id);
       dispatch(setData({channels:data}));
+      console.log(data);
     }
     else return;
   }
@@ -59,6 +60,7 @@ const ChannelPage = ({id}) => {
   )
 }
 
+
 export const ChannelDetails=({id})=>{
 
   const dispatch = useDispatch();
@@ -66,17 +68,16 @@ export const ChannelDetails=({id})=>{
   const darkMode = getSelector('darkMode');
   const communityTheme = getSelector('communityTheme');
   const customCommunity = getSelector('customCommunity');
-  const [communityDesc,setCommunityDesc] = useState('');
   
   function changeBgColors(){
     const color = changeCommunityTheme();
     dispatch(setCommunityTheme(color));
   }
 
-  if(window.location.href.includes('comment')) return;
+  // if(window.location.href.includes('comment')) return;
 
   return (
-    <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg`}>
+    <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg sticky top-16`}>
       <div style={{backgroundColor:communityTheme}} className={`z-50 w-full h-10 py-2`}></div>
       <div className='bg-white w-full px-6 pb-4 flex flex-col gap-2'>
         {/* First Half */}
@@ -107,7 +108,7 @@ export const ChannelDetails=({id})=>{
         <div className='flex flex-col gap-4'>
             <div onClick={copyClipboardFunc} className='w-full bg-blue-400 cursor-pointer text-white rounded-full bg- text-center flex flex-col gap-3 px-4 py-2'>Share</div>
             <div className='flex items-center gap-4 text-gray-500'>
-                <FaEyeSlash className='text-black'/> Community Theme <ToggleSwitch onClick={changeBgColors} />
+                <FaEyeSlash className='text-black'/> Community Theme <ToggleSwitchPosts onClick={changeBgColors} />
             </div>
         </div>
       </div>
