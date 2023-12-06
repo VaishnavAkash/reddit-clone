@@ -1,7 +1,9 @@
 import { setChatArray, setLiveChatArray } from '@/slices/homeSlice';
 import { getSelector } from '@/utils/helper';
 import React, { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Loader from './Loader';
 
 const LiveChat = () => {
     const liveChatArray = getSelector('liveChatArray');
@@ -10,11 +12,13 @@ const LiveChat = () => {
     const chatArray = getSelector('chatArray');
     const chatDivRef = useRef(null); 
     const arrayLengthRef = useRef(0);
+    const [loader,setLoader] = useState(true);
 
     async function getQuote() {
         const res = await fetch('https://type.fit/api/quotes');
         const data = await res.json();
         dispatch(setChatArray(data));
+        setLoader(false);
     }
 
     useEffect(() => {
@@ -39,7 +43,7 @@ const LiveChat = () => {
       }, [chatArray]); 
 
 
-    return (
+    return loader ? <Loader/> : (
         <div ref={chatDivRef} className='flex modal-container flex-col-reverse w-full overflow-y-auto h-[20rem]'>
             {liveChatArray.length > 0 &&
                 liveChatArray.map((item,idx) => {

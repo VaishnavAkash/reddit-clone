@@ -8,6 +8,7 @@ import { loginUser, setNavbarDropdown, setNotificationModal, setShowLoginModal, 
 import { redirect } from 'next/navigation';
 import { ChatModal } from '@/components/CustomModals';
 import { Toaster } from 'react-hot-toast';
+import Navbar from '@/components/Navbar';
 
 
 
@@ -53,6 +54,8 @@ useEffect(()=>{
   },[])
   
   return (
+    <>
+    <Navbar/>
     <div className={`laptop:flex relative h-fit`}>
       {showSidebar && <div className='laptop:w-[17%] tablet:min-w-[17%] fixed z-30 laptop:top-7 tablet:top-12 tablet:py-7 mobile:top-9 mobile:py-6'>
         <SidebarMenu/>
@@ -63,6 +66,7 @@ useEffect(()=>{
       {showMessageModal && <ChatModal/>}
       <Toaster/>
     </div>
+    </>
   )
 }
 

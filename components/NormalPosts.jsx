@@ -81,7 +81,7 @@ const NormalPosts = () => {
 
   if(loader) return <Loader/>;
 
-  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] z-40 h-[100%] fixed left-0 top-4 flex justify-center items-center gradient-bg'>
+  return showLoginModal  && !userLoggedIn ? <div className='w-[100%] z-[1000] h-[100%] fixed left-0 top-0 flex justify-center items-center backdrop-blur-sm gradient-bg'>
     <LoginForm/>
     </div> : (
     <div className={`laptop:flex text-sm ${viewOptionsWidth=='Card' ?'gap-8 px-8' :'px-4 gap-4'} py-8`}>

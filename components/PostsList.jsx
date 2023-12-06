@@ -9,21 +9,29 @@ import InfiniteLoader from './InfiniteLoader';
 import { BiSolidUpvote } from "react-icons/bi";
 import UpsetLogo from '@/assets/upsetLogo.jpg';
 import Image from 'next/image';
+import { CiLight } from 'react-icons/ci';
 
 export const LoggedInPostsList = () => {
   const post = getSelector('postsData');
-  
+  const searchedPosts = getSelector('searchedPosts');
+  const searchInputSlice = getSelector('searchInputSlice');
+
   if(window.location.href.includes('r/customCommunity')) return <div className='bg-gray-200 flex flex-col justify-center items-center h-full w-full text-2xl'>
     <Image src={UpsetLogo} height='' width='' alt='upset logo'/>
     <div className='text-black font-bold'>No Posts Found!</div>
     </div>
 
   return (
-    <div className='flex flex-col gap-8'>   
-                  {post?.map((epost)=>{
+    <div className='flex flex-col gap-8 w-full'>   
+                  {searchInputSlice ? searchedPosts?.map((epost)=>{
+                    console.log(epost);
                     return <HigherOrderPostCard key={epost?._id} epost={epost} />
-                  })}
-                  <div className='w-full text-center  text-sm text-gray-600'>You all caught up!</div>
+                  }) :  post?.map((epost)=>{
+                    console.log(epost);
+                    return <HigherOrderPostCard key={epost?._id} epost={epost} />
+                  })
+                  }
+                  <div className='w-full text-center text-sm text-gray-600'>{searchedPosts?.length==0  ? 'No Posts Found!' : 'You all Caught Up'}</div>
                 </div>
   )
 }

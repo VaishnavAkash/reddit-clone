@@ -18,12 +18,13 @@ import {GiFrostfire} from 'react-icons/gi';
 import { useSelector,useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import homeSlice, { setData, setMessageModal, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setShowLoginModal , setWidth, showSidebar } from '@/slices/homeSlice';
+import homeSlice, { setData, setMessageModal, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setSearchInput, setSearchInputSlice, setSearchedPosts, setShowLoginModal , setWidth, showSidebar } from '@/slices/homeSlice';
 import { LoggedInOptionsModal, NormalOptionsDropDown, SearchModal } from './CustomModals';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { getSelector, notify } from '@/utils/helper';
 import {NotificationModal} from '@/components/CustomModals';
 import { redirect } from 'next/dist/server/api-utils';
+import { useState } from 'react';
 
 const Navbar = () => {
   const userLoggedIn = useSelector(store=>store.homeSlice.userLoggedIn);
@@ -33,6 +34,7 @@ const Navbar = () => {
 const LoggedInNavbar = () =>{
 
   const dispatch= useDispatch();
+  const [searchInputNav,setSearchInputNav] = useState('');
   const userDetails= useSelector(store=>store.homeSlice.userDetails);
   const darkMode = useSelector(store=>store.homeSlice.darkMode);
   const showNavDropdown = getSelector('navbarDropdown'); 
@@ -41,8 +43,8 @@ const LoggedInNavbar = () =>{
   const width = getSelector('width');
   const openSearchModal = getSelector('openSearchModal');
   const isOnline = getSelector('isOnline');
-  const postsArray = useSelector(store=>store.homeSlice.postsArray);
-  
+  const postsData = getSelector('postsData');
+
   function handleShowSidebar(){
     dispatch(showSidebar());
   }
@@ -67,23 +69,29 @@ const LoggedInNavbar = () =>{
     dispatch(setOpenSearchModal(!openSearchModal));
   }
 
+  function getSearchedPosts(){
+    const searchedFilteredPosts = postsData?.filter((item)=>{
+      return item?.author?.name.toLowerCase().includes(searchInputNav.toLowerCase()) || 
+             item?.content.toLowerCase().includes(searchInputNav.toLowerCase()) ||
+            item?.channel?.name.toLowerCase().includes(searchInputNav.toLowerCase()) ;
+    })
+    dispatch(setSearchedPosts(searchedFilteredPosts));
+  }
+
   function handleRenderPost(e){
-    e.preventDefault();
-    notify('Here are results matching with your keyword');
+    e?.preventDefault();
     dispatch(setOpenSearchModal(false));
-    const startNum = Math.floor(Math.random()*10)+1;
-    const endNum = Math.floor(Math.random()*10)+2;
-    console.log(startNum)
-    console.log(endNum)
-    const newPosts = postsArray.slice(startNum,endNum);
-    dispatch(setData({posts:newPosts}));
-    console.log(newPosts);
+    getSearchedPosts();
   }
 
   useEffect(()=>{
     window.addEventListener('resize',resize);
     return ()=> window.removeEventListener('resize',resize);
   },[])
+
+  useEffect(()=>{
+    handleRenderPost();
+  },[searchInputNav])
 
 
  return (
@@ -104,7 +112,7 @@ const LoggedInNavbar = () =>{
     <div className='flex relative items-center cursor-pointer w-[80rem] min-w-[50%] justify-start gap-4'>
       <form onSubmit={handleRenderPost} onClick={handleOpenChatModal} className={`flex relative items-center w-[70%] py-2 px-4 bg-gray-200 ${openSearchModal?'rounded-t-3xl':'rounded-full'} gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400`}>
         <GoSearch className='text-2xl text-black'/>
-        <input className='w-[100%] bg-transparent outline-none text-black' placeholder='Search Reddit'/>
+        <input value={searchInputNav} onChange={(e)=>{setSearchInputNav(e.target.value);dispatch(setSearchInputSlice(e.target.value))}} className='w-[100%] bg-transparent outline-none text-black' placeholder='Search Reddit'/>
         {openSearchModal && <SearchModal/>}
       </form>
         {width>=854 && <Link href='/popular'><BsArrowRightCircle className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
@@ -165,7 +173,7 @@ const RegularNavbar = () =>{
         <RxHamburgerMenu onClick={handleShowSidebar} className='text-lg cursor-pointer min-w-lg'/>
         <Link href='/'><Image className='cursor-pointer' priority={false} src={WhiteLogo} width={110} height={10} alt='reddit-logo'/></Link>
       </div>
-      <div className='flex items-center cursor-pointer border-black desktop:w-[60rem] laptop:min-w-[50rem] laptop:max-w-[45rem] tablet:max-w-[30rem] tablet:min-w-[20rem] py-2 px-4 rounded-full gap-4 bg-gray-100 border-[1px] hover:border-blue-400 '>
+      <div onClick={handleLogin} className='flex items-center cursor-pointer border-black desktop:w-[60rem] laptop:min-w-[50rem] laptop:max-w-[45rem] tablet:max-w-[30rem] tablet:min-w-[20rem] py-2 px-4 rounded-full gap-4 bg-gray-100 border-[1px] hover:border-blue-400 '>
         <GoSearch className='text-2xl'/>
         <input className='w-full bg-transparent outline-none' placeholder='Search Reddit'/>
       </div>

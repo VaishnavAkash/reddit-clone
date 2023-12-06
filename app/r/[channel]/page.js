@@ -10,6 +10,7 @@ import SidebarMenu from '@/components/SidebarMenu.jsx';
 import { loginUser, setNavbarDropdown, setNotificationModal, setShowLoginModal, setViewOptionsDropdown, setWidth } from '@/slices/homeSlice';
 import { ChatModal } from '@/components/CustomModals';
 import { useEffect } from 'react';
+import Navbar from '@/components/Navbar';
 
 const Page = ({params}) => { 
 
@@ -58,6 +59,7 @@ const Page = ({params}) => {
 
   return (
     <>
+    <Navbar/>
     <div  className={`laptop:flex relative h-fit`}>
       {showSidebar && <div className='w-[17%] fixed z-30 top-12'>
         <SidebarMenu/>

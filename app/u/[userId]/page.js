@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import UserPage from '@/components/UserPage';
 import { ChatModal } from '@/components/CustomModals';
+import Navbar from '@/components/Navbar';
 
 const Page = ({params}) => {  
 
@@ -55,6 +56,7 @@ useEffect(()=>{
   
   return (
     <>
+    <Navbar/>
     <div className={`laptop:flex relative h-[100vh] ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {showSidebar && <div className='w-[17%] fixed top-12'>
         <SidebarMenu/>

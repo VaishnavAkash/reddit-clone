@@ -231,6 +231,7 @@ export const ChatModal = () =>{
 
   function handleAddChat(e){
     e.preventDefault();
+    if(chatValue.trim()=='') return;
     dispatch(setLiveChatArray({author:userDetails,text:chatValue}));
     setChatValue('');
   }
@@ -333,7 +334,7 @@ export const SearchModal=()=>{
     <div className="text-xl font-bold">Trending Today</div>
     <div>
       {iterableArray?.map((data,idx)=>{
-    return <Link key={data?._id} href={`r/${data?._id}/comments/${data?._id}`}>
+    return <Link key={data?._id} href={`/r/${data?._id}/comments/${data?._id}`}>
       <div className="border-b-2 border-blue-200 py-2">
             <div className="flex items-center gap-2">
               <img src={data?.channel?.image} className="w-11 h-11 rounded-full" alt='user logo' />
