@@ -47,6 +47,8 @@ const LoggedInNavbar = () =>{
   const sidebarSlice = getSelector('sidebar');
 
   function handleShowSidebar(){
+    console.log('clicked');
+    console.log(sidebarSlice);
     dispatch(showSidebar(!sidebarSlice));
   }
   
@@ -152,6 +154,7 @@ const RegularNavbar = () =>{
   const darkMode = useSelector(store=>store.homeSlice.darkMode);
   const showNavDropdown = getSelector('navbarDropdown'); 
   const width = getSelector('width');
+  const showSidebarSlice = getSelector('sidebar');
 
 
   function showNavDropdownFunc(){
@@ -164,7 +167,9 @@ const RegularNavbar = () =>{
   }
 
   function handleShowSidebar(){
-    dispatch(showSidebar());
+    console.log('clicked')
+    console.log(showSidebarSlice)
+    dispatch(showSidebar(!showSidebarSlice));
   }
   
 

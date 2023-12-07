@@ -16,27 +16,11 @@ const SidebarMenu=()=>{
 
   const [showItems,setShowItems] = useState(false);
   const darkMode = getSelector('darkMode');
-  const width = getSelector('width');
-  const dispatch = useDispatch();
 
   function showMenuItems(){
     setShowItems(prev=>!prev);
   }
 
-  useEffect(()=>{
-    if(width<=600){
-      dispatch(showSidebar(false))
-      console.log(width + ' in if');
-    } 
-    else{
-      dispatch(showSidebar(true))
-      console.log(width+' in else')
-    } 
-  },[width])
-
-  useEffect(()=>{
-    console.log(width)
-  },[width])
 
     return (
       <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
