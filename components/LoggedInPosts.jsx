@@ -141,10 +141,14 @@ const LoggedInPosts = ({id=''}) =>{
     const communityModal = getSelector('communityModal');
     const languagesArray1 = ['English','Francais','Spanish'];
     const languagesArray2 = ['Bengali','Marathi','Pubjabi'];
+    const width = getSelector('width');
 
     function handleCommunityModal(){
       dispatch(setCommunityModal(!communityModal));  
     }
+
+      if(width<=600) return;
+
     return (
       <>
       <div className={`w-full relative flex justify-start shadow-md border-[1px] px-2 py-4 border-gray text-sm flex-col items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} rounded-lg gap-4`}>

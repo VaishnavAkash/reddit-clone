@@ -44,9 +44,10 @@ const LoggedInNavbar = () =>{
   const openSearchModal = getSelector('openSearchModal');
   const isOnline = getSelector('isOnline');
   const postsData = getSelector('postsData');
+  const sidebarSlice = getSelector('sidebar');
 
   function handleShowSidebar(){
-    dispatch(showSidebar());
+    dispatch(showSidebar(!sidebarSlice));
   }
   
   function showNavDropdownFunc(){

@@ -127,8 +127,8 @@ const initialState={
         expandChannel :(state)=>{
             state.channelExpand= !state.channelExpand;
         },
-        showSidebar: (state)=>{
-            state.sidebar= !state.sidebar;
+        showSidebar: (state,action)=>{
+            state.sidebar= action.payload;
         },
         setData: (state,action)=>{
             if(action.payload.posts){

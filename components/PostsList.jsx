@@ -27,7 +27,6 @@ export const LoggedInPostsList = () => {
                     console.log(epost);
                     return <HigherOrderPostCard key={epost?._id} epost={epost} />
                   }) :  post?.map((epost)=>{
-                    console.log(epost);
                     return <HigherOrderPostCard key={epost?._id} epost={epost} />
                   })
                   }

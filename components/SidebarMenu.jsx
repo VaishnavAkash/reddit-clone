@@ -1,5 +1,5 @@
 'use client';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AiOutlineHome} from 'react-icons/ai';
 import {BsFillArrowUpRightCircleFill} from 'react-icons/bs';
 import {BsChevronDown} from 'react-icons/bs';
@@ -8,16 +8,26 @@ import {MdGames} from 'react-icons/md';
 import {FiBarChart2} from 'react-icons/fi';
 import Link from 'next/link';
 import { SideBarItems } from './CustomModals';
-import { useSelector } from 'react-redux';
-import {notify} from '@/utils/helper.js';
+import { useDispatch, useSelector } from 'react-redux';
+import {getSelector, notify} from '@/utils/helper.js';
+import { showSidebar } from '@/slices/homeSlice';
 
 const SidebarMenu=()=>{
 
   const [showItems,setShowItems] = useState(false);
-  const darkMode = useSelector(store=>store.homeSlice.darkMode);
+  const darkMode = getSelector('darkMode');
+  const width = getSelector('width');
+  const dispatch = useDispatch();
+
   function showMenuItems(){
     setShowItems(prev=>!prev);
   }
+
+  useEffect(()=>{
+    if(width<=600){
+      dispatch(showSidebar(false));
+    } 
+  },[])
 
     return (
       <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
