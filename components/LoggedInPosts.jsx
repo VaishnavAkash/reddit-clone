@@ -147,7 +147,7 @@ const LoggedInPosts = ({id=''}) =>{
       dispatch(setCommunityModal(!communityModal));  
     }
 
-      if(width<=600) return;
+      if(width<=1024) return;
 
     return (
       <>

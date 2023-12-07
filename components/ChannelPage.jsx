@@ -68,13 +68,14 @@ export const ChannelDetails=({id})=>{
   const darkMode = getSelector('darkMode');
   const communityTheme = getSelector('communityTheme');
   const customCommunity = getSelector('customCommunity');
-  
+  const width = getSelector('width');
+
   function changeBgColors(){
     const color = changeCommunityTheme();
     dispatch(setCommunityTheme(color));
   }
 
-  // if(window.location.href.includes('comment')) return;
+  if(width<=600) return;
 
   return (
     <div className={`${darkMode?'text-white':'text-black'} shadow-lg rounded-lg sticky top-16`}>
