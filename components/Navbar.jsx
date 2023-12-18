@@ -111,10 +111,10 @@ const LoggedInNavbar = () =>{
         </div>}
     </div>
     <div className='flex relative items-center cursor-pointer w-[80rem] min-w-[50%] justify-start gap-4'>
-      <form onSubmit={handleRenderPost} onClick={handleOpenChatModal} className={`flex relative items-center w-[70%] py-2 px-4 bg-gray-200 ${openSearchModal?'rounded-t-3xl':'rounded-full'} gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400`}>
+      <form onSubmit={handleRenderPost} onClick={handleOpenChatModal} className={`flex relative items-center w-[70%] py-2 px-4 bg-gray-200 ${openSearchModal && width>=1024 ?'rounded-t-3xl':'rounded-full'} gap-4 hover:bg-gray-100 border-[1px] hover:border-blue-400`}>
         <GoSearch className='text-2xl text-black'/>
         <input value={searchInputNav} onChange={(e)=>{setSearchInputNav(e.target.value);dispatch(setSearchInputSlice(e.target.value))}} className='w-[100%] bg-transparent outline-none text-black' placeholder='Search Reddit'/>
-        {openSearchModal && <SearchModal/>}
+        {openSearchModal && width>=1024 && <SearchModal/>}
       </form>
         {width>=854 && <Link href='/popular'><BsArrowRightCircle className='text-2xl cursor-pointer hover:text-blue-400'/></Link>}
         <AiOutlineMessage onClick={handleMessageModal} className='text-[1.8rem] cursor-pointer hover:text-blue-400'/>
