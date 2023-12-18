@@ -2,7 +2,7 @@
 import LoggedInPosts from './LoggedInPosts';
 import { LuCakeSlice } from "react-icons/lu";
 import { FaEyeSlash } from "react-icons/fa";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { changeCommunityTheme, copyClipboardFunc, getAuthor, getChannelInfo, getSelector } from '@/utils/helper';
 import { useDispatch } from 'react-redux';
 import { setCommunityTheme, setCustomCommunity, setData } from '@/slices/homeSlice';

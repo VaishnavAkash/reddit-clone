@@ -1,15 +1,13 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import {AiOutlineMessage} from 'react-icons/ai';
 import { IoMdShareAlt } from 'react-icons/io';
 import { getSelector, handlePostShare, notify } from '@/utils/helper';
-import { UserInfoModal } from './CustomModals';
 import InfiniteLoader from './InfiniteLoader';
 import { BiSolidUpvote } from "react-icons/bi";
 import UpsetLogo from '@/assets/upsetLogo.jpg';
 import Image from 'next/image';
-import { CiLight } from 'react-icons/ci';
 
 export const LoggedInPostsList = () => {
   const post = getSelector('postsData');

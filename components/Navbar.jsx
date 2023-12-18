@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import WhiteLogo from '@/assets/reddit-logo-full.webp';
-import BlackLogo from '@/assets/dark-reddit-logo.png';
 import UserLogo from '../assets/userLogo.webp';
 import {GoSearch} from 'react-icons/go';
 import {BsQrCodeScan} from 'react-icons/bs';
@@ -18,12 +17,11 @@ import {GiFrostfire} from 'react-icons/gi';
 import { useSelector,useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import homeSlice, { setData, setMessageModal, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setSearchInput, setSearchInputSlice, setSearchedPosts, setShowLoginModal , setWidth, showSidebar } from '@/slices/homeSlice';
+import {  setMessageModal, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setSearchInput, setSearchInputSlice, setSearchedPosts, setShowLoginModal , setWidth, showSidebar } from '@/slices/homeSlice';
 import { LoggedInOptionsModal, NormalOptionsDropDown, SearchModal } from './CustomModals';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { getSelector, notify } from '@/utils/helper';
 import {NotificationModal} from '@/components/CustomModals';
-import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -100,7 +98,7 @@ const LoggedInNavbar = () =>{
  return (
   <div className={`flex items-center text-sm justify-between w-full gap-4 tablet:px-8 mobile:px-3 py-[2px] fixed border-b-2 border-gray top-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} z-[100]`}>
     <div className='flex min-w-[25%] items-center gap-4'>
-    <RxHamburgerMenu onClick={handleShowSidebar} className='text-3xl cursor-pointer'/>
+    <RxHamburgerMenu onClick={handleShowSidebar} className='laptop:text-xl mobile:3xl cursor-pointer'/>
         <Link href='/'><Image className='cursor-pointer' priority={false} src={WhiteLogo} width={110} height={10} alt='reddit-logo'/></Link>
         {width>=1024 &&<div onClick={handleShowSidebar} className={`cursor-pointer flex items-center gap-4 justify-between w-fit px-4 py-2 ${darkMode ? 'bg-black text-white':'bg-white text-black hover:bg-gray-50'}`}>
           <div className='flex items-center gap-2'>

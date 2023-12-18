@@ -1,8 +1,7 @@
-import { pushAuthorDetails } from '@/slices/homeSlice';
 import { memo } from 'react';
 import { getSelector } from '@/utils/helper';
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux';
 
 const Comment = ({comment,author}) => {
 

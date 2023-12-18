@@ -4,20 +4,23 @@ import SidebarMenu from '@/components/SidebarMenu.jsx';
 import { useDispatch } from "react-redux";
 import CommentsPage from '@/components/CommentsPage';
 import { getSelector } from '@/utils/helper';
-import { loginUser, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setShowLoginModal, setViewOptionsDropdown, setWidth } from '@/slices/homeSlice';
+import { loginUser, setNavbarDropdown, setNotificationModal, setOpenSearchModal, setShowLoginModal, setViewOptionsDropdown, setWidth, showSidebar } from '@/slices/homeSlice';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { ChatModal } from '@/components/CustomModals';
 import Navbar from '@/components/Navbar';
+import { IoCloseOutline } from "react-icons/io5";
+
 
 const Page = ({params}) => {  
   
   const dispatch = useDispatch();
-  const showSidebar = getSelector('sidebar');
+  const showSidebarSlice = getSelector('sidebar');
   const darkMode = getSelector('darkMode');
   const userLoggedIn = getSelector('userLoggedIn');
   const showMessageModal = getSelector('messageModal');
+  const width = getSelector('width');
   
   if(!userLoggedIn) {
     dispatch(setShowLoginModal(true));  
@@ -56,16 +59,17 @@ useEffect(()=>{
   return (
     <>
     <Navbar/>
-    <div className={`laptop:flex relative h-full ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {showSidebar && <div className='w-[17%] fixed top-12'>
-        <SidebarMenu/>
+    <div className={`laptop:flex relative h-fit`}>
+      {showSidebarSlice && <div className={`${showSidebarSlice && width<=760 ? 'w-full flex justify-between sidebarOpacity':'laptop:w-[17%] tablet:min-w-[17%]'} fixed z-30 laptop:top-7 tablet:top-12 mobile:top-9`}>
+        <SidebarMenu/>  
+        <div className='absolute tablet:top-7 mobile:top-8 right-8 text-3xl text-white' onClick={()=>dispatch(showSidebar(false))}><IoCloseOutline/></div>
       </div>}
-      <div className={`${showSidebar ? 'w-[83%] left-[18rem]' : 'w-full left-3'} ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative top-[5rem] h-[100%]`}>
+      <div className={`${showSidebarSlice && width>=760 ? 'w-[83%] tablet:left-[14.1rem] laptop:left-[16rem] mobile:left-[11rem]' : 'w-full left-0'} ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative  top-[3rem] h-[100%] py-4`}>
         <CommentsPage id={params.postId}/>
       </div>
+      {showMessageModal && <ChatModal/>}
+      <Toaster/>
     </div>
-    {showMessageModal && <ChatModal/>}
-    <Toaster/>
     </>
   )
 }

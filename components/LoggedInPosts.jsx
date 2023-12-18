@@ -34,7 +34,6 @@ const LoggedInPosts = ({id=''}) =>{
     const [currentActiveFilter,setCurrentActiveFilter] = useState('Hot');
     const width = getSelector('width');
     const isOnline = getSelector('isOnline');
-    const post = useSelector(store=>store.homeSlice.postsData);
 
     function handleViewMode(){
       dispatch(setViewOptionsDropdown(!viewOptionsDropdown));
@@ -124,7 +123,7 @@ const LoggedInPosts = ({id=''}) =>{
                 </div>
               </div>
               <div className='laptop:w-[30%] flex justify-start flex-col gap-4 top-20'>
-                {width>=1024 && window.location.pathname.includes('r/') ? <ChannelDetails id={id}/> : <PostsSidebar/>}
+                {width>=1022 && window.location.pathname.includes('r/') ? <ChannelDetails id={id}/> : <PostsSidebar/>}
                 <div className='flex justify-center laptop:sticky mobile:fixed laptop:top-[88%] mobile:top-[37rem] right-0 pt-8'> 
                   <button onClick={scrollToTop} className={`w-fit rounded-full mobile:min-w-[2rem] mobile:text-sm laptop:text-md flex bg-blue-400 text-white  px-4 py-2`}>Move To Top</button>
                 </div>

@@ -1,13 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
-import {BiUpvote} from 'react-icons/bi';
-import {BiDownvote} from 'react-icons/bi';
 import { BiCommentDetail } from 'react-icons/bi';
 import { ChannelDetails } from './ChannelPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts,getComments, getSelector, getChannelInfo, getSinglePost, notify, addComment } from '@/utils/helper';
-import { setCommentPageData, setCommentsMapper, setData } from '@/slices/homeSlice';
+import { getComments, getSelector, getChannelInfo, getSinglePost, notify, addComment } from '@/utils/helper';
+import { setCommentPageData, setData } from '@/slices/homeSlice';
 import Loader from './Loader';
 import Link from 'next/link';
 import CommentsList from './CommentsList';
@@ -69,7 +67,7 @@ const CommentsPage = ({id}) => {
           <div className='flex'>
           <div className='bg-gray-400 rounded-l-lg w-fit px-3 py-4'></div>
           <div className='flex flex-col gap-8 shadow-lg rounded-r-lg px-2 py-2'>
-            <div className='flex gap-1 items-center'>
+            <div className='flex flex-col laptop:flex-row gap-1 items-center'>
               <img className='w-12 h-12 rounded-full' src={post?.author?.profileImage} />
               <Link href={`/r/${post?._id}`}><span className='text-sm hover:underline cursor-pointer'>r/{post?.channel?.name}</span></Link>
               <span className='text-gray-400 text-sm'>Posted by <span className='text-blue-400'>u/{post?.author?.name}</span> 2 days ago</span>

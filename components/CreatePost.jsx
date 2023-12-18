@@ -6,18 +6,18 @@ import Link from 'next/link';
 import { IoAdd } from "react-icons/io5";
 import { getSelector, notify } from '@/utils/helper';
 import { useDispatch } from 'react-redux';
-import { setUserPageDetails, setUserPosts } from '@/slices/homeSlice';
+import { setUserPageDetails } from '@/slices/homeSlice';
 
 const CreatePost = () => {
 
     const darkMode = getSelector('darkMode');
     const dispatch = useDispatch();
-    const rulesArray = ['1. Remember the human','2. Behave like you would in real life','3. Look for the original source of content','4. Search for duplicates before posting','5. Follow Ethics and Modularity']
+    const rulesArray = ['1. Remember the human','2. Behave like you would in real life','3. Look for the original source of content','4. Search for duplicates before posting','5. Follow Ethics and Morality']
     const width = getSelector('width');
     const userPageDetails = getSelector('userPageDetails');
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
-    const options = {  hour: '2-digit', minute: '2-digit' ,  second: '2-digit' };
+    const options = {  hour: '2-digit' , minute: '2-digit' ,  second: '2-digit' };
     const userDetails = getSelector('userDetails');
 
 
@@ -31,7 +31,7 @@ const CreatePost = () => {
     }
     
   return (
-    <div className={`flex relative top-4 w-full px-24 gap-8 text-black`}>
+    <div className={`flex relative top-4 w-full laptop:px-24 px-2 gap-8 text-black`}>
         <div className={` ${width>1023 ? 'w-[70%]':'w-full'} flex flex-col gap-4`}>
             <div className='w-full flex rounded-lg shadow-lg px-8 py-4 bg-white'>
                 <div className='w-full'>Create A Post</div>

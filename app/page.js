@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getSelector } from '@/utils/helper';
 import { ChatModal } from '@/components/CustomModals';
 import Navbar from '@/components/Navbar';
+import { IoCloseOutline } from "react-icons/io5";
 
 
 
@@ -54,7 +55,7 @@ const Page = () => {
 
   useEffect(()=>{
     resize();
-    window.addEventListener('resize',resize);
+    window.addEventListener('resize',resize); 
     return ()=> window.removeEventListener('resize',resize);
   },[])
 
@@ -62,10 +63,11 @@ const Page = () => {
     <>
     <Navbar/>
     <div className={`laptop:flex relative h-fit`}>
-      {showSidebarSlice && <div className='laptop:w-[17%] tablet:min-w-[17%] fixed z-30 laptop:top-7 tablet:top-12 tablet:py-7 mobile:top-9 mobile:py-6'>
-        <SidebarMenu/>
+      {showSidebarSlice && <div className={`${showSidebarSlice && width<=760 ? 'w-full flex justify-between sidebarOpacity':'laptop:w-[17%] tablet:min-w-[17%]'} fixed z-30 laptop:top-7 tablet:top-12 mobile:top-9`}>
+        <SidebarMenu/>  
+        <div className='absolute tablet:top-10 mobile:top-8 right-8 text-3xl text-white' onClick={()=>dispatch(showSidebar(false))}><IoCloseOutline/></div>
       </div>}
-      <div className={`${showSidebarSlice ? 'w-[83%] tablet:left-[14.1rem] laptop:left-[16rem] mobile:left-[11rem]' : 'w-full left-0'} ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative  top-[3rem] h-[100%] py-4`}>
+      <div className={`${showSidebarSlice && width>=760 ? 'w-[83%] tablet:left-[14.1rem] laptop:left-[16rem] mobile:left-[11rem]' : 'w-full left-0'} ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative  top-[3rem] h-[100%] py-4`}>
         <Main/>
       </div>
       {showMessageModal && <ChatModal/>}

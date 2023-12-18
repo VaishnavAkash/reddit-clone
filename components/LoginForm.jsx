@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
 import { MdClose } from "react-icons/md";
 import { handleLoginUser,handleSignUpUser, notify } from "@/utils/helper";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser, setShowLoginModal, setUserDetails } from "@/slices/homeSlice";
 import Loader,{LoginFormLoader} from "./Loader";
 import Link from 'next/link';

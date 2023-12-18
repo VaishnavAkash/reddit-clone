@@ -2,22 +2,16 @@
 
 import {useState,useEffect} from 'react';
 import ChannelList from './ChannelList'
-import { BiUpvote } from 'react-icons/bi'
-import { BiDownvote } from 'react-icons/bi'
-import { BiCommentDetail } from 'react-icons/bi'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {BsChevronDown} from 'react-icons/bs'
-import { IoMdShareAlt } from "react-icons/io";
 import Link from 'next/link';
-import { UserInfoModal, ViewOptionsModal } from './CustomModals';
+import {  ViewOptionsModal } from './CustomModals';
 import NormalPostsList from './PostsList';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setData, setShowLoginModal, setViewOptionsDropdown } from '@/slices/homeSlice';
 import { getChannels, infiniteScrollPost, getSelector } from '@/utils/helper';
 import Loader from './Loader';
 import LoginForm from './LoginForm';
-import InfiniteLoader from './InfiniteLoader';
-
 
 const NormalPosts = () => {
 

@@ -12,11 +12,10 @@ import { FaBalanceScale } from "react-icons/fa";
 import { LiaEyeSolid } from "react-icons/lia";
 import { FaUserLarge } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-// import userAvatar from '@/assets/userAvatar.webp';
 import Image from 'next/image';
 import Link from 'next/link';
 import notificationLogo from '@/assets/notificationLogo.png';
-import { logOutUser, setChatArray, setCommunityModal, setCustomCommunity, setIsOnline, setLightMode, setLiveChatArray, setMessageModal, setMiniMessageModal, setShowLoginModal, setViewOptionsWidth } from "@/slices/homeSlice";
+import { logOutUser,  setCommunityModal, setCustomCommunity, setIsOnline, setLightMode, setLiveChatArray, setMessageModal, setMiniMessageModal, setShowLoginModal, setViewOptionsWidth } from "@/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getSelector, notify } from "@/utils/helper";
 import { IoSend } from "react-icons/io5";
@@ -217,7 +216,6 @@ export const ChatModal = () =>{
   const darkMode = getSelector('darkMode');
   const miniMessageModal = getSelector('miniMessageModal');
   const width = getSelector('width');
-  const chatArray = getSelector('chatArray');
   const userDetails = getSelector('userDetails');
   const [chatValue,setChatValue] = useState('');
 
@@ -236,9 +234,11 @@ export const ChatModal = () =>{
     setChatValue('');
   }
 
-  return miniMessageModal ? <div onClick={changeMessageMode} className="flex justify-between items-center hover:bg-gray-100 cursor-pointer fixed laptop:top-[41rem] mobile:top-[41.3rem] text-black right-24 bg-white h-[2rem] border-[2px] border-gray-300 w-[7rem] rounded-lg px-2 z-50">Chat <RxCross1 onClick={closeMessageModal} className="cursor-pointer"/></div> : 
-  <section className={`flex fixed laptop:top-[14.6rem] right-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} h-[28.8rem] border-[2px] border-gray-300 laptop:w-[50rem] tablet:w-[40rem] mobile:w-[30rem] z-50`}>
-            <div className="laptop:w-[17rem] tablet:w-[12rem] mobile:w-[8rem] gap-10 border-e-2 border-gray-200">
+  return miniMessageModal ? <div onClick={changeMessageMode} className="flex justify-between items-center hover:bg-gray-100 cursor-pointer fixed laptop:top-[41rem] mobile:bottom-2 mobile:right-2 text-black right-24 bg-white h-[2rem] border-[2px] border-gray-300 w-[7rem] rounded-lg px-2 z-[1000]">Chat <RxCross1 onClick={closeMessageModal} className="cursor-pointer"/></div> : 
+  <>
+          <div className="laptop:hidden fixed top-0 right-0 block w-[100vw] h-[100vh] sidebarOpacity"></div>
+          <section className={`flex fixed laptop:top-[14.6rem] mobile:sidebarOpacity mobile:top-[9rem] right-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} h-[28.8rem] border-[2px] border-gray-300 laptop:w-[50rem] tablet:w-[40rem] mobile:w-[30rem] z-50`}>
+            <div className="laptop:w-[17rem] tablet:w-[12rem] mobile:w-[12rem] gap-10 border-e-2 border-gray-200">
               <div className="px-2 py-3">Chats</div>
               {/* Content */}
               <div style={{backgroundColor:darkMode?'':'lightgray'}} className={`flex py-3 px-3 items-center w-full gap-4}`}>
@@ -251,7 +251,7 @@ export const ChatModal = () =>{
               <div className="bg-white h-fit w-full"></div>
             </div>
             {/* Right */}
-            <div className=" laptop:w-[38rem] mobile:w-[22rem] px-4 flex flex-col">
+            <div className=" laptop:w-[38rem] tablet:w-[30rem] mobile:w-[18rem] px-4 flex flex-col">
               <div className="h-[10%] flex justify-between items-center">
                 <div>General</div>
                 <div className="flex items-center gap-4"><FaChevronDown className="cursor-pointer" onClick={changeMessageMode}/> <RxCross1 className="cursor-pointer" onClick={closeMessageModal}/></div>
@@ -265,6 +265,7 @@ export const ChatModal = () =>{
               </form>
             </div>
   </section>
+  </>
 }
 
 export const CreateCommunityModal = ()=>{

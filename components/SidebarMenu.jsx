@@ -1,5 +1,5 @@
 'use client';
-import {useEffect, useState} from 'react';
+import { useState} from 'react';
 import {AiOutlineHome} from 'react-icons/ai';
 import {BsFillArrowUpRightCircleFill} from 'react-icons/bs';
 import {BsChevronDown} from 'react-icons/bs';
@@ -8,9 +8,7 @@ import {MdGames} from 'react-icons/md';
 import {FiBarChart2} from 'react-icons/fi';
 import Link from 'next/link';
 import { SideBarItems } from './CustomModals';
-import { useDispatch, useSelector } from 'react-redux';
 import {getSelector, notify} from '@/utils/helper.js';
-import { showSidebar } from '@/slices/homeSlice';
 
 const SidebarMenu=()=>{
 
@@ -23,7 +21,7 @@ const SidebarMenu=()=>{
 
 
     return (
-      <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh]`}>
+      <div className={`border-e-[1px] px-4 ${darkMode ? 'border-gray-50':'border-gray-100'} text-sm ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} shadow-lg h-[100vh] tablet:py-7 mobile:py-4`}>
       <div className='laptop:py-6 px-4 mb-1 border-b-2 border-gray'>
         <Link href='/'>
           <div className={`${darkMode ? ' text-white hover:text-blue-400' : 'bg-white text-gray-800 hover:bg-gray-100'} flex cursor-pointer  justify-start items-center tablet:gap-4 mobile:gap-2 px-4 py-2 rounded-lg`}>

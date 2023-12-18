@@ -1,18 +1,12 @@
 import { copyClipboardFunc, getSelector, notify } from '@/utils/helper'
 import React,{useState} from 'react'
-import {BsFire} from 'react-icons/bs';
-import { UserInfoModal, ViewOptionsModal } from './CustomModals';
 import Image from 'next/image';
 import UserAvatar from '../assets/userLogo.webp'
 import {FcGallery} from 'react-icons/fc';
 import {HiOutlineLink} from 'react-icons/hi';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import {BsChevronDown} from 'react-icons/bs';
 import Link from 'next/link';
-import {BsPatchCheckFill} from 'react-icons/bs';
-import { setUserPageDetails, setViewOptionsDropdown } from '@/slices/homeSlice';
+import { setUserPageDetails } from '@/slices/homeSlice';
 import { CiShare2 } from "react-icons/ci";
-import { FaEdit } from "react-icons/fa";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { useDispatch } from 'react-redux';
 
@@ -27,15 +21,6 @@ const UserPage = ({id}) => {
     const isOnline = getSelector('isOnline');
     const viewOptionsDropdown = getSelector('viewOptionsDropdown');
     const [currentActiveFilter,setCurrentActiveFilter] = useState('Hot');
-
-
-    function handleViewMode(){
-        dispatch(setViewOptionsDropdown(!viewOptionsDropdown));
-    }
-
-    function changeCurrentActiveFilter(e){
-        setCurrentActiveFilter(e.target.innerText);
-      }
 
     return (
         <div className='flex flex-col gap-8'>
@@ -78,8 +63,7 @@ const UserPosts=()=>{
     const dispatch = useDispatch();
     const userPageDetails = getSelector('userPageDetails');
     const posts = userPageDetails.posts;
-    const darkMode = getSelector('darkMode');   
-
+  
     function removePost(time){
         const deletingPost = posts?.filter((item)=>item?.time != time); 
         dispatch(setUserPageDetails({posts:deletingPost}));
