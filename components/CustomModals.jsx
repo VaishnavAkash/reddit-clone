@@ -237,7 +237,7 @@ export const ChatModal = () =>{
   return miniMessageModal ? <div onClick={changeMessageMode} className="flex justify-between items-center hover:bg-gray-100 cursor-pointer fixed laptop:top-[41rem] mobile:bottom-2 mobile:right-2 text-black right-24 bg-white h-[2rem] border-[2px] border-gray-300 w-[7rem] rounded-lg px-2 z-[1000]">Chat <RxCross1 onClick={closeMessageModal} className="cursor-pointer"/></div> : 
   <>
           <div className="laptop:hidden fixed top-0 right-0 block w-[100vw] h-[100vh] sidebarOpacity"></div>
-          <section className={`flex fixed laptop:top-[14.6rem] mobile:sidebarOpacity mobile:top-[9rem] right-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} h-[28.8rem] border-[2px] border-gray-300 laptop:w-[50rem] tablet:w-[40rem] mobile:w-[30rem] z-50`}>
+          <section className={`flex fixed bottom-0 mobile:sidebarOpacity right-0 ${darkMode ? 'bg-black text-white':'bg-white text-black'} h-[28.8rem] border-[2px] border-gray-300 laptop:w-[50rem] tablet:w-[40rem] mobile:w-[30rem] z-50`}>
             <div className="laptop:w-[17rem] tablet:w-[12rem] mobile:w-[12rem] gap-10 border-e-2 border-gray-200">
               <div className="px-2 py-3">Chats</div>
               {/* Content */}

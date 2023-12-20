@@ -17,7 +17,7 @@ const initialState={
     notificationModal: false,
     messageModal: false,
     miniMessageModal: false,
-    width:0,
+    width:1200,
     communityModal:false,
     customCommunity:{},
     openSearchModal:false,

@@ -8,7 +8,7 @@ import Link from 'next/link';
 import {  ViewOptionsModal } from './CustomModals';
 import NormalPostsList from './PostsList';
 import { useDispatch } from 'react-redux';
-import { setData, setShowLoginModal, setViewOptionsDropdown } from '@/slices/homeSlice';
+import { setData, setNavbarDropdown, setShowLoginModal, setViewOptionsDropdown } from '@/slices/homeSlice';
 import { getChannels, infiniteScrollPost, getSelector } from '@/utils/helper';
 import Loader from './Loader';
 import LoginForm from './LoginForm';
@@ -63,7 +63,7 @@ const NormalPosts = () => {
 
     useEffect(()=>{
      getData();
-     
+    dispatch(setNavbarDropdown(false));
      window.addEventListener('scroll',onScroll);
      return ()=> window.removeEventListener('scroll',onscroll);
     },[])
